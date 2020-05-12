@@ -64,6 +64,6 @@ Pending: test the alternatives (`renv`, dockers, etc.)
 Some additional tips:
 
 * Error handling: use `purrr::possibly()` and `purrr::safely()` rather than base R `tryCatch()`
-* Progress bars: for intensive `purrr::map*()` you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
+* Progress bars: for intensive `purrr::map*()` tasks you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
 * Geographic information systems (GIS): use the `sf` package, which makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
 * Graphing: use `ggplot2` obviously, and consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`  

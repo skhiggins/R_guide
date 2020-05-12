@@ -46,11 +46,24 @@ When randomizing assignment in an RCT:
 
 ## Running scripts
 
-Once you complete a script, which you might be running line by line while you work on it, make sure the script works on a fresh R session. To do this from Rstudio:
+Once you complete a script, which you might be running line by line while you work on it, make sure the script works on a fresh R session. To do this from RStudio:
 * Ctrl+Shift+F10 to restart the R session running behind the scenes in Rstudio.
 * Ctrl+Shift+Enter to run the whole script
+
+To avoid inefficiently saving and restoring the workspace when closing and opening RStudio, go to Tools > Global Options... > General and:
+* Uncheck "Restore .RData into workspace at startup"
+* For "Save Workspace to .RData on exit", select "Never"
+* Click OK
 
 ## Reproducibility 
 
 Pending: test the alternatives (`renv`, dockers, etc.)
 
+## Misc.
+
+Some additional tips:
+
+* Error handling: use `purrr::possibly()` and `purrr::safely()` rather than base R `tryCatch()`
+* Progress bars: for intensive `purrr::map*()` you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
+* Geographic information systems (GIS): use the `sf` package, which makes graphing maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
+* Graphing: use `ggplot2` obviously, and consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`  

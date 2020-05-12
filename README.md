@@ -41,7 +41,7 @@ When randomizing assignment in an RCT:
 * Immediately before the line using a randomization function, include `set.seed(seed)`.
 * Build a randomization check: create a second variable a second time with a new name, repeating `set.seed(seed)` immediately before creating the second variable. Then check that the randomization is identical using `assert_that(all(df$var1 == df$var2))`.
 * It is also good to do a more manual check where you run the full script once, save the resulting data with a different name, then restart R (see instructions below), run it a second time. Then read in both data sets with the random assignment and assert that they are identical.
-* Note: if creating two cross-randomized variables, you would not want to repeat set.seed(seed) before creating the second one, otherwise it would use the same assignment as the first.
+* Note: if creating two cross-randomized variables, you would not want to repeat `set.seed(seed)` before creating the second one, otherwise it would use the same assignment as the first.
 
 ## Running scripts
 

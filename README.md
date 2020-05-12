@@ -5,7 +5,7 @@ This guide provides instructions for using R on research projects.
 ## Style and packages
 
 * For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
-* Use `tidyverse` or `data.table`. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
+* Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here()` package.

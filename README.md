@@ -57,7 +57,10 @@ To avoid inefficiently saving and restoring the workspace when closing and openi
 
 ## Reproducibility 
 
-Pending: test the alternatives (`renv`, dockers, etc.)
+* Use `renv` (instead of `packrat`) to manage the packages used in a project, avoiding conflicts related to package versioning.
+  * `renv::init()` will create a "local library" of the packages employed in a project. This library will be stored in a new `renv/` folder in the project's directory.
+  * `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
+  * When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
 
 ## Misc.
 

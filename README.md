@@ -8,7 +8,7 @@ This guide provides instructions for using R on research projects.
 * Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
-* Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here()` package.
+* Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, unlike Hadley, I like to use) and the `%$%` exposition pipe.
 * I wrote a package `tabulator` for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
@@ -49,7 +49,7 @@ Once you complete a script, which you might be running line by line while you wo
 * Ctrl+Shift+F10 to restart the R session running behind the scenes in Rstudio.
 * Ctrl+Shift+Enter to run the whole script
 
-## Replicability 
+## Reproducibility 
 
 Pending: test the alternatives (`renv`, dockers, etc.)
 

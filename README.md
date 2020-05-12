@@ -25,6 +25,7 @@ Generally, within the folder where we are doing data analysis, we have:
 * documentation - documentation about the data goes in this folder
 * proc - processed data sets go in this folder
 * scripts - code goes in this folder
+  * Number scripts in the order in which they should be run
 
 ## Master script
 Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses.

@@ -10,6 +10,7 @@ This guide provides instructions for using R on research projects.
 * Use `lubridate` for working with dates.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here()` package.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
+* Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, unlike Hadley, I like to use) and the `%$%` exposition pipe.
 * I wrote a package `tabulator` for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
   * `tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.

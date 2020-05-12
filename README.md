@@ -10,11 +10,9 @@ This guide provides instructions for using R on research projects.
 * Use `lubridate` for working with dates.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here()` package.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
-* `tabulator::tab()` works similarly to Stata's tabulate. To install, 
-  ```r
-  devtools::install_github("skhiggins/tabulator")
-  ```
-* `tabulator::tabcount()` might also be useful to count the number of unique observations defined by a set of variables.
+* I wrote a package `tabulator` for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
+  * `tab()` works similarly to Stata's tabulate. 
+  * `tabcount()` counts the number of unique observations defined by a set of variables.
 
 ## Folder structure
 

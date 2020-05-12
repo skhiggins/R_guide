@@ -47,7 +47,7 @@ When randomizing assignment in an RCT:
 
 Once you complete a script, which you might be running line by line while you work on it, make sure the script works on a fresh R session. To do this from Rstudio:
 * Ctrl+Shift+F10 to restart the R session running behind the scenes in Rstudio.
-* Ctlr+Shift+Enter to run the whole script
+* Ctrl+Shift+Enter to run the whole script
 
 ## Replicability 
 

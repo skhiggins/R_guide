@@ -20,7 +20,7 @@ This guide provides instructions for using R on research projects.
 
 Generally, within the folder where we are doing data analysis, we have:
 * An .Rproj file for the project. (This can be created in Rstudio, with File > New Project.)
-  * Note that if you always open the Project within Rstudio before working (see "Project" in the upper right-hand corner of Rstudio) then the here() package will work for relative filepaths.
+  * Note that if you always open the Project within Rstudio before working (see "Project" in the upper right-hand corner of Rstudio) then the `here` package will work for relative filepaths.
 * data - only raw data go in this folder
 * documentation - documentation about the data goes in this folder
 * proc - processed data sets go in this folder

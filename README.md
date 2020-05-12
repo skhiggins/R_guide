@@ -34,7 +34,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 When randomizing assignment in an RCT:
 * Seed: Use a seed from https://www.random.org/: put Min 1 and Max 100000000, then click Generate, and copy the result into your script. Towards the top of the script, assign the seed with the line
   ```r
-  seed <- ... # from random.org`
+  seed <- ... # from random.org
   ```
   where ... is replaced with the number that you got from random.org 
 * Use the `randomizr` package. Here is [a cheatsheet](https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf) of the different randomization functions.

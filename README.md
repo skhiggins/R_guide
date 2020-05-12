@@ -4,9 +4,9 @@ This guide provides instructions for using R on research projects.
 
 ## Style and packages
 
-* For coding style practices, follow the tidyverse style guide.
-* Generally, use tidyverse. For big data sets (millions of observations), use data.table
-* Never use setwd() or absolute file paths. Instead, use relative file paths with the here() package.
+* For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
+* Generally, use `tidyverse`. For big data sets (millions of observations), use `data.table`.
+* Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here()` package.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
 * `tabulator::tab()` works similarly to Stata's tabulate. To install, 
   ```r

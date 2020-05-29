@@ -9,6 +9,7 @@ This guide provides instructions for using R on research projects.
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
+  * To avoid conflicts with the deprecated `lubridate::here()`, it is best to always write `here::here()` for filepaths, rather than just `here()` since this could cause a conflict if the user has the `lubridate` package loaded (even if the particular script you are writing doesn't use `lubridate`)
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, unlike Hadley, I like to use) and the `%$%` exposition pipe.
 * I wrote a package `tabulator` for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.

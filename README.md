@@ -36,7 +36,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 
 * Use `ggplot`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
 * I wrote a function [`set_theme.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
-  ```
+  ```r
   library(tidyverse)
  
   # use the defaults

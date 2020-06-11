@@ -46,8 +46,8 @@ Keep a master script 0_master.R that lists each script in the order they should 
     set_theme()
   ```
   but it differs from other themes in that you can directly change its default formatting within `set_theme()`. See [`set_theme_reprex.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
-* For reproducible graphs (independent of the size of your plot window in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
- * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio plots pane when you specify the `width` and `height` arguments in `ggsave()`.
+* For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
+ * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
 * For high resolution, save graphs as .eps or .pdf files. 
   * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files for the times when you can't get the cropping just right in R.
   * `crop_pdf` coming soon

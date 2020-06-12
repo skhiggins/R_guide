@@ -29,7 +29,29 @@ Generally, within the folder where we are doing data analysis, we have:
   * Number scripts in the order in which they should be run
 
 ## Master script
+
 Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses.
+
+## Graphing
+
+* Use `ggplot`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
+* I wrote a function [`set_theme.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
+  ```r
+  library(tidyverse)
+ 
+  # use the defaults
+  mtcars %>% ggplot() + 
+    geom_point(aes(y = hp, x = wt)) + 
+    labs(y = "Horsepower", x = "Weight") +
+    set_theme()
+  ```
+  but it differs from other themes in that you can directly change its default formatting within `set_theme()`. See [`set_theme_reprex.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
+* For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
+ * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
+* For high resolution, save graphs as .eps or .pdf files. 
+  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files for the times when you can't get the cropping just right in R.
+  * `crop_pdf` coming soon
+* For maps, use the `sf` package. This package makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
 
 ## Randomization
 
@@ -38,7 +60,7 @@ When randomizing assignment in an RCT:
   ```r
   seed <- ... # from random.org
   ```
-  where ... is replaced with the number that you got from random.org 
+  where `...` is replaced with the number that you got from [random.org](https://www.random.org/) 
 * Use the `randomizr` package. Here is [a cheatsheet](https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf) of the different randomization functions.
 * Immediately before the line using a randomization function, include `set.seed(seed)`.
 * Build a randomization check: create a second variable a second time with a new name, repeating `set.seed(seed)` immediately before creating the second variable. Then check that the randomization is identical using `assert_that(all(df$var1 == df$var2))`.
@@ -69,5 +91,3 @@ Some additional tips:
 
 * Error handling: use `purrr::possibly()` and `purrr::safely()` rather than base R `tryCatch()`
 * Progress bars: for intensive `purrr::map*()` tasks you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
-* Geographic information systems (GIS): use the `sf` package, which makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
-* Graphing: use `ggplot2` obviously, and consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`  

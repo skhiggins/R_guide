@@ -11,7 +11,6 @@ source(here::here("scripts", "set_theme.R"))
 mtcars %>% ggplot() + 
   geom_point(aes(y = hp, x = wt)) + 
   labs(y = "Horsepower", x = "Weight") +
-  theme_classic() + 
   set_theme()
 ggsave(
   here::here("graphs", "set_theme_defaults.eps"), 

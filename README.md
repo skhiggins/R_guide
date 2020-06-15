@@ -5,6 +5,8 @@ This guide provides instructions for using R on research projects.
 ## Style and packages
 
 * For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
+  * Use `styler::style_file()` to format your R script according to the [tidyverse style guide](https://style.tidyverse.org/).
+  * Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). It is strongly suggested to only style files that are under version control or to create a backup copy.
 * Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
@@ -80,10 +82,10 @@ To avoid inefficiently saving and restoring the workspace when closing and openi
 
 ## Reproducibility 
 
-* Use `renv` (instead of `packrat`) to manage the packages used in a project, avoiding conflicts related to package versioning.
-  * `renv::init()` will create a "local library" of the packages employed in a project. This library will be stored in a new `renv/` folder in the project's directory.
-  * `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
-  * When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
+Use `renv` (instead of `packrat`) to manage the packages used in a project, avoiding conflicts related to package versioning.
+* `renv::init()` will create a "local library" of the packages employed in a project. This library will be stored in a new `renv/` folder in the project's directory.
+* `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
+* When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
 
 ## Misc.
 

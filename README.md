@@ -5,7 +5,7 @@ This guide provides instructions for using R on research projects.
 ## Style and packages
 
 * For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
-  * Use `styler::style_file()` to format your R script according to the [tidyverse style guide](https://style.tidyverse.org/).
+  * While you should read the style guide and do your best to follow it, once you save the script you can use `styler::style_file()` to fix its formatting and ensure it adheres to the [tidyverse style guide](https://style.tidyverse.org/).
   * Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). It is strongly suggested to only style files that are under version control or to create a backup copy.
 * Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
 * Use `stringr` for manipulating strings.

@@ -1,6 +1,6 @@
 # R Guide
 
-This guide provides instructions for using R on research projects. 
+This guide provides instructions for using R on research projects. Its purpose is to use with collaborators and research assistants to make code consistent, easier to read, transparent, and reproducible.
 
 ## Style and packages
 

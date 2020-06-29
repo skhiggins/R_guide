@@ -58,7 +58,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 
 ## Randomization
 
-When randomizing assignment in an RCT:
+When randomizing assignment in a randomized control trial (RCT):
 * Seed: Use a seed from https://www.random.org/: put Min 1 and Max 100000000, then click Generate, and copy the result into your script. Towards the top of the script, assign the seed with the line
   ```r
   seed <- ... # from random.org

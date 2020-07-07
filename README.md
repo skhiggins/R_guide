@@ -2,16 +2,24 @@
 
 This guide provides instructions for using R on research projects. Its purpose is to use with collaborators and research assistants to make code consistent, easier to read, transparent, and reproducible.
 
-## Style and packages
+## Style
 
-* For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
-  * While you should read the style guide and do your best to follow it, once you save the script you can use `styler::style_file()` to fix its formatting and ensure it adheres to the [tidyverse style guide](https://style.tidyverse.org/).
-  * Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). It is strongly suggested to only style files that are under version control or to create a backup copy.
-* Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
+For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
+* While you should read the style guide and do your best to follow it, once you save the script you can use `styler::style_file()` to fix its formatting and ensure it adheres to the [tidyverse style guide](https://style.tidyverse.org/).
+  * Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). The documentation strongly suggests to only style files that are under version control or to create a backup copy.
+  
+## Packages
+
+* Use `tidyverse` and/or `data.table` for wrangling data. 
+  * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
+  * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/06/30/reshape-benchmarks/)), etc.
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
+* Use `conflicted` to explicitly resolve namespace conflicts.
+  * `conflicted::conflict_scout()` displays namespace conflicts
+  * `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
-  * To avoid conflicts with the deprecated `lubridate::here()`, it is best to always write `here::here()` for filepaths, rather than just `here()` since this could cause a conflict if the user has the `lubridate` package loaded (even if the particular script you are writing doesn't use `lubridate`)
+  * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, unlike Hadley, I like to use) and the `%$%` exposition pipe.
 * I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
@@ -28,6 +36,9 @@ Generally, within the folder where we are doing data analysis, we have:
 * data - only raw data go in this folder
 * documentation - documentation about the data goes in this folder
 * proc - processed data sets go in this folder
+* results - results go in this folder
+  * figures - subfolder for figures
+  * tables - subfolder for tables
 * scripts - code goes in this folder
   * Number scripts in the order in which they should be run
 

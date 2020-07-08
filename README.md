@@ -41,6 +41,7 @@ Generally, within the folder where we are doing data analysis, we have:
   * tables - subfolder for tables
 * scripts - code goes in this folder
   * Number scripts in the order in which they should be run
+  * programs - a subfolder containing functions called by the analysis scripts (if applicable)
 
 ## Master script
 

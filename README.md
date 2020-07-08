@@ -72,8 +72,6 @@ Keep a master script 0_master.R that lists each script in the order they should 
       plot_margin = unit(c(t = 2, r = 2, b = 2, l = 2), "pt")
     )
   ```  
-  
-  
   See [`set_theme_reprex.R`](scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
 * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.

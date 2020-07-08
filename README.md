@@ -102,6 +102,16 @@ Use `renv` (instead of `packrat`) to manage the packages used in a project, avoi
 * `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
 * When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
 
+## Version control
+
+### GitHub
+Instructions coming soon.
+
+### Dropbox
+Sometimes Rstudio projects don't play nicely with Dropbox syncing because Dropbox is trying to continuously sync while you are editing code. To solve this issue on windows:
+1. Open your .Rproj project in RStudio
+1. Run the function (dropbox_project_sync_off())[scripts/dropbox_project_sync_off.R] ((details)[https://community.rstudio.com/t/dropbox-conflicts-with-rproj-user/54059/2]
+
 ## Misc.
 
 Some additional tips:

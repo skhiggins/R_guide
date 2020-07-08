@@ -108,7 +108,7 @@ Use `renv` (instead of `packrat`) to manage the packages used in a project, avoi
 Instructions coming soon.
 
 ### Dropbox
-Sometimes Rstudio projects don't play nicely with Dropbox syncing because Dropbox is trying to continuously sync while you are editing code. To solve this issue on Windows:
+Sometimes RStudio projects don't play nicely with Dropbox syncing because Dropbox is trying to continuously sync while you are editing code. To solve this issue on Windows:
 1. Open your .Rproj project in RStudio
 1. Run the function [`dropbox_project_sync_off()`](scripts/programs/dropbox_project_sync_off.R) ([details](https://community.rstudio.com/t/dropbox-conflicts-with-rproj-user/54059/2))
 

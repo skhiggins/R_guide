@@ -13,7 +13,7 @@ source(here("scripts", "programs", "set_theme.R"))
 # We will use the mtcars dataframe which was already loaded with tidyverse
 
 # ANALYSIS --------------------------------------------------------------------
-# use the defaults
+# Use the defaults
 mtcars %>% ggplot() + 
   geom_point(aes(y = hp, x = wt)) + 
   labs(y = "Horsepower", x = "Weight") +
@@ -25,9 +25,9 @@ ggsave(
     # (otherwise will depend on size of Rstudio plots pane)
 )
 
-# add x and y axes at 0, decrease plot margins,
+# Add x and y axes at 0, decrease plot margins,
 #  remove extra space below 0, 
-#  add some cushion to the right of the y-axis title and above x-axis title
+#  add some cushion to the right of the y-axis title and above x-axis title.
 mtcars %>% ggplot() + 
   geom_point(aes(y = hp, x = wt)) + 
   labs(y = "Horsepower", x = "Weight") +

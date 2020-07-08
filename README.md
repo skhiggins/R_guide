@@ -54,13 +54,27 @@ Keep a master script 0_master.R that lists each script in the order they should 
   ```r
   library(tidyverse)
  
-  # use the defaults
+  # Use the defaults
   mtcars %>% ggplot() + 
     geom_point(aes(y = hp, x = wt)) + 
     labs(y = "Horsepower", x = "Weight") +
     set_theme()
   ```
-  but it differs from other themes in that you can directly change its default formatting within `set_theme()`. See [`set_theme_reprex.R`](scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
+  but it differs from other themes in that you can directly change its default formatting within `set_theme()`. For example:
+  ```r
+  # Change margins
+  mtcars %>% ggplot() + 
+    geom_point(aes(y = hp, x = wt)) + 
+    labs(y = "Horsepower", x = "Weight") +
+    set_theme(
+      y_title_margin = "r = 5",
+      x_title_margin = "t = 5", 
+      plot_margin = unit(c(t = 2, r = 2, b = 2, l = 2), "pt")
+    )
+  ```  
+  
+  
+  See [`set_theme_reprex.R`](scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
 * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
 * For high resolution, save graphs as .eps or .pdf files. 

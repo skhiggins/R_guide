@@ -1,21 +1,32 @@
 # R Guide
 
-This guide provides instructions for using R on research projects. 
+This guide provides instructions for using R on research projects. Its purpose is to use with collaborators and research assistants to make code consistent, easier to read, transparent, and reproducible.
 
-## Style and packages
+## Style
 
-* For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
-* Use `tidyverse` and/or `data.table` for wrangling data. For big data (millions of observations), the efficiency advantages of `data.table` become important. 
+For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
+* While you should read the style guide and do your best to follow it, once you save the script you can use `styler::style_file()` to fix its formatting and ensure it adheres to the [tidyverse style guide](https://style.tidyverse.org/).
+  * Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). The documentation strongly suggests to only style files that are under version control or to create a backup copy.
+  
+## Packages
+
+* Use `tidyverse` and/or `data.table` for wrangling data. 
+  * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
+  * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
+* Use `conflicted` to explicitly resolve namespace conflicts.
+  * `conflicted::conflict_scout()` displays namespace conflicts
+  * `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
-  * To avoid conflicts with the deprecated `lubridate::here()`, it is best to always write `here::here()` for filepaths, rather than just `here()` since this could cause a conflict if the user has the `lubridate` package loaded (even if the particular script you are writing doesn't use `lubridate`)
+  * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
-* Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, unlike Hadley, I like to use) and the `%$%` exposition pipe.
+* Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
 * I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
   * `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
+* Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
 
 ## Folder structure
 
@@ -25,12 +36,16 @@ Generally, within the folder where we are doing data analysis, we have:
 * data - only raw data go in this folder
 * documentation - documentation about the data goes in this folder
 * proc - processed data sets go in this folder
+* results - results go in this folder
+  * figures - subfolder for figures
+  * tables - subfolder for tables
 * scripts - code goes in this folder
   * Number scripts in the order in which they should be run
+  * programs - a subfolder containing functions called by the analysis scripts (if applicable)
 
 ## Master script
 
-Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses.
+Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run the master script to run the entire analysis from raw data to final results (although this may be infeasible for some project, e.g. one with multiple confidential data sets that can only be accessed on separate servers).
 
 ## Graphing
 
@@ -55,7 +70,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 
 ## Randomization
 
-When randomizing assignment in an RCT:
+When randomizing assignment in a randomized control trial (RCT):
 * Seed: Use a seed from https://www.random.org/: put Min 1 and Max 100000000, then click Generate, and copy the result into your script. Towards the top of the script, assign the seed with the line
   ```r
   seed <- ... # from random.org
@@ -78,12 +93,14 @@ To avoid inefficiently saving and restoring the workspace when closing and openi
 * For "Save Workspace to .RData on exit", select "Never"
 * Click OK
 
+Similarly, when running R scripts from the terminal, specify the `--vanilla` option to avoid ineffecient saving/restoring of the workspace.
+
 ## Reproducibility 
 
-* Use `renv` (instead of `packrat`) to manage the packages used in a project, avoiding conflicts related to package versioning.
-  * `renv::init()` will create a "local library" of the packages employed in a project. This library will be stored in a new `renv/` folder in the project's directory.
-  * `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
-  * When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
+Use `renv` (instead of `packrat`) to manage the packages used in a project, avoiding conflicts related to package versioning.
+* `renv::init()` will create a "local library" of the packages employed in a project. This library will be stored in a new `renv/` folder in the project's directory.
+* `renv::snapshot()` will parse the project's local library and save its package sources (e.g. CRAN or GitHub links to the specific package versions) in an `renv.lock` "lockfile". 
+* When using the project in a different machine, `renv::restore()` will use this `renv.lock` file to retrieve all the needed packages, in their appropiate versions. 
 
 ## Misc.
 

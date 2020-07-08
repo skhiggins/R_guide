@@ -12,7 +12,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 
 * Use `tidyverse` and/or `data.table` for wrangling data. 
   * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
-  * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/06/30/reshape-benchmarks/)), etc.
+  * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
 * Use `conflicted` to explicitly resolve namespace conflicts.

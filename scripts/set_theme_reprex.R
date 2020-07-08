@@ -1,19 +1,25 @@
 # Simple examples of using set_theme() to standardize graph formatting
 #  Sean Higgins
 
+# PACKAGES --------------------------------------------------------------------
 library(tidyverse)
 library(here)
 
+# FUNCTIONS -------------------------------------------------------------------
 # Read in set_theme function
-source(here::here("scripts", "set_theme.R"))
+source(here("scripts", "programs", "set_theme.R"))
 
+# DATA ------------------------------------------------------------------------
+# We will use the mtcars dataframe which was already loaded with tidyverse
+
+# ANALYSIS --------------------------------------------------------------------
 # use the defaults
 mtcars %>% ggplot() + 
   geom_point(aes(y = hp, x = wt)) + 
   labs(y = "Horsepower", x = "Weight") +
   set_theme()
 ggsave(
-  here::here("graphs", "set_theme_defaults.eps"), 
+  here("results", "figures", "set_theme_defaults.eps"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
     # (otherwise will depend on size of Rstudio plots pane)
@@ -39,7 +45,7 @@ mtcars %>% ggplot() +
     plot_margin = unit(c(t = 2, r = 2, b = 2, l = 2), "pt")
   )
 ggsave(
-  here::here("graphs", "set_theme_with_axes.eps"), 
+  here("results", "figures", "set_theme_with_axes.eps"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
   # (otherwise will depend on size of Rstudio plots pane)
@@ -54,7 +60,7 @@ mtcars %>% ggplot() +
     # no vertical axis since histogram doesn't start at 0
   set_theme()
 ggsave(
-  here::here("graphs", "set_theme_histogram.eps"), 
+  here("results", "figures", "set_theme_histogram.eps"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
   # (otherwise will depend on size of Rstudio plots pane)

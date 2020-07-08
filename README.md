@@ -50,7 +50,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 ## Graphing
 
 * Use `ggplot`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
-* I wrote a function [`set_theme.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
+* I wrote a function [`set_theme.R`](scripts/programs/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
   ```r
   library(tidyverse)
  
@@ -60,7 +60,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
     labs(y = "Horsepower", x = "Weight") +
     set_theme()
   ```
-  but it differs from other themes in that you can directly change its default formatting within `set_theme()`. See [`set_theme_reprex.R`](https://github.com/skhiggins/R_guide/blob/master/scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
+  but it differs from other themes in that you can directly change its default formatting within `set_theme()`. See [`set_theme_reprex.R`](scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
 * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
 * For high resolution, save graphs as .eps or .pdf files. 
@@ -110,7 +110,7 @@ Instructions coming soon.
 ### Dropbox
 Sometimes Rstudio projects don't play nicely with Dropbox syncing because Dropbox is trying to continuously sync while you are editing code. To solve this issue on windows:
 1. Open your .Rproj project in RStudio
-1. Run the function [dropbox_project_sync_off()](scripts/dropbox_project_sync_off.R) ([details](https://community.rstudio.com/t/dropbox-conflicts-with-rproj-user/54059/2)
+1. Run the function [dropbox_project_sync_off()](scripts/programs/dropbox_project_sync_off.R) ([details](https://community.rstudio.com/t/dropbox-conflicts-with-rproj-user/54059/2))
 
 ## Misc.
 

@@ -33,6 +33,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   library(tidyverse)
   library(Hmisc)
   
+  # Write codebook to text file
   sink(here("results", "mtcars_codebook.txt"))
   mtcars %>% describe() %>% print() # print() needed if running script from command line
   sink() # close the sink

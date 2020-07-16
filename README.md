@@ -116,7 +116,7 @@ To avoid inefficiently saving and restoring the workspace when closing and openi
 * For "Save Workspace to .RData on exit", select "Never"
 * Click OK
 
-Similarly, when running R scripts from the terminal, specify the `--vanilla` option to avoid ineffecient saving/restoring of the workspace.
+Similarly, when running R scripts from the command line, specify the `--vanilla` option to avoid ineffecient saving/restoring of the workspace.
 
 ## Reproducibility 
 

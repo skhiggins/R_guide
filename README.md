@@ -22,7 +22,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
-* I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install,  `devtools::install_github("skhiggins/tabulator")`.
+* I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install,  `remotes::install_github("skhiggins/tabulator")`.
   * `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
@@ -41,8 +41,8 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 ## Folder structure
 
 Generally, within the folder where we are doing data analysis, we have:
-* An .Rproj file for the project. (This can be created in Rstudio, with File > New Project.)
-  * Note that if you always open the Project within Rstudio before working (see "Project" in the upper right-hand corner of Rstudio) then the `here` package will work for relative filepaths.
+* An .Rproj file for the project. (This can be created in RStudio, with File > New Project.)
+  * Note that if you always open the Project within RStudio before working (see "Project" in the upper right-hand corner of RStudio) then the `here` package will work for relative filepaths.
 * data - only raw data go in this folder
 * documentation - documentation about the data goes in this folder
 * proc - processed data sets go in this folder
@@ -59,7 +59,7 @@ Keep a master script 0_master.R that lists each script in the order they should 
 
 ## Graphing
 
-* Use `ggplot`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
+* Use `ggplot2`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
 * I wrote a function [`set_theme.R`](scripts/programs/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
   ```r
   library(tidyverse)
@@ -107,7 +107,7 @@ When randomizing assignment in a randomized control trial (RCT):
 ## Running scripts
 
 Once you complete a script, which you might be running line by line while you work on it, make sure the script works on a fresh R session. To do this from RStudio:
-* Ctrl+Shift+F10 to restart the R session running behind the scenes in Rstudio.
+* Ctrl+Shift+F10 to restart the R session running behind the scenes in RStudio.
 * Ctrl+Shift+Enter to run the whole script
 
 To avoid inefficiently saving and restoring the workspace when closing and opening RStudio, go to Tools > Global Options... > General and:

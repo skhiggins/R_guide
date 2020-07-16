@@ -27,6 +27,16 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
+* `Hmisc::describe()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set.
+  * This can be used in conjunction with `sink()` to print the codebook in a log file. For example:
+  ```r 
+  library(tidyverse)
+  library(Hmisc)
+  
+  sink(here("results", "mtcars_codebook.log"))
+  mtcars %>% describe() %>% print() # print() needed if running script from command line
+  sink() # close the sink
+  ```
 
 ## Folder structure
 
@@ -130,3 +140,4 @@ Some additional tips:
 
 * Error handling: use `purrr::possibly()` and `purrr::safely()` rather than base R `tryCatch()`
 * Progress bars: for intensive `purrr::map*()` tasks you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
+* If you need to log some printed output, a quick and dirty way is `sink()`. 

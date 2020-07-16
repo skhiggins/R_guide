@@ -28,12 +28,12 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
 * `Hmisc::describe()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set.
-  * This can be used in conjunction with `sink()` to print the codebook in a log file. For example:
+  * This can be used in conjunction with `sink()` to print the codebook to a text file. For example:
   ```r 
   library(tidyverse)
   library(Hmisc)
   
-  sink(here("results", "mtcars_codebook.log"))
+  sink(here("results", "mtcars_codebook.txt"))
   mtcars %>% describe() %>% print() # print() needed if running script from command line
   sink() # close the sink
   ```

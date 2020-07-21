@@ -41,7 +41,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   ```
 
 * Use `modelsummary` for formatting tables. 
-  * To use `modelsummary` w/ fixed effects regressions: `fixest` creates models of the class `fixest`; in order for `modelsummary` to extract coefficients from those models, define a function in the beginning of the scripts: 
+  * To use `modelsummary` w/ fixed effects regressions: `fixest` creates models of the class `fixest`; in order for `modelsummary` to extract coefficients from those models, include the following code in any script where you are using both `modelsummary` and `fixest`:
   ```r
   glance_custom.fixest <- function(x) {
     out <- tibble::tibble(.rows = 1)

@@ -53,7 +53,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   ```
 
 * Use `modelsummary` for formatting tables. 
-  * To use `modelsummary` w/ fixed effects regressions: `fixest` creates models of the class `fixest`; in order for `modelsummary` to extract coefficients from those models, include the following code in any script where you are using both `modelsummary` and `fixest`:
+  * To use `modelsummary` with fixed effects regressions: `fixest` creates models of the class `fixest`; in order for `modelsummary` to extract coefficients from those models, include the following code in any script where you are using both `modelsummary` and `fixest`:
   ```r
   glance_custom.fixest <- function(x) {
     out <- tibble::tibble(.rows = 1)
@@ -92,7 +92,7 @@ The analysis and figure/table scripts should not change the data sets at all (no
 ### Naming scripts
 * Include a 00_run.R script (described below).
 * Number scripts in the order in which they should be run, starting with 01.
-* Because a project often uses multiple data sources, I usually include a brief description of the data source being used as the first part of the script name (in the example below, `ex` describes the data source), followed by a description of the action being done (eg `dataprep`, `reg`, etc.), with each component of the script name separated by an underscore.
+* Because a project often uses multiple data sources, I usually include a brief description of the data source being used as the first part of the script name (in the example below, `ex` describes the data source), followed by a description of the action being done (e.g. `dataprep`, `reg`, etc.), with each component of the script name separated by an underscore (`_`).
 
 ### 00_run.R script 
 Keep a "run" script, 00_run.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run `00_run.R` to run the entire analysis from raw data to final results (although this may be infeasible for some project, e.g. one with multiple confidential data sets that can only be accessed on separate servers).
@@ -169,19 +169,20 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
 * For high resolution, save graphs as .eps or .pdf files. 
-  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files for the times when you can't get the cropping just right in R.
+  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files to post-process your .eps files for the times when you can't get the cropping just right with `ggplot2`.
   * `crop_pdf` coming soon
 * For maps, use the `sf` package. This package makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
 
 ## Saving files
 
-* For small data sets, save as .csv with `readr::write_csv()` and read with `readr::read_csv()`. (Note the `readr` package is part of `tidyverse`.)
-    * When reading in a large .csv from another source, it might be worth using `data.table::fread()` for speed improvements.
+* For small data sets, save as .csv with `readr::write_csv()` and read with `readr::read_csv()`. (Note: the `readr` package is part of `tidyverse`.)
+    * When reading in a large .csv file from another source, it can be worth using `data.table::fread()` for speed improvements.
+    * For smaller .csv files I prefer `readr::write_csv()` due to a number of nice features such as the way it handles columns with dates.
     
 * For larger data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
-    * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file smaller but will take longer to read and write. 
+    * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 
     
-* When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function you created to `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
+* When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 
 ## Randomization
 
@@ -194,8 +195,10 @@ When randomizing assignment in a randomized control trial (RCT):
 * Use the `randomizr` package. Here is [a cheatsheet](https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf) of the different randomization functions.
 * Immediately before the line using a randomization function, include `set.seed(seed)`.
 * Build a randomization check: create a second variable a second time with a new name, repeating `set.seed(seed)` immediately before creating the second variable. Then check that the randomization is identical using `assert_that(all(df$var1 == df$var2))`.
-* It is also good to do a more manual check where you run the full script once, save the resulting data with a different name, then restart R (see instructions below), run it a second time. Then read in both data sets with the random assignment and assert that they are identical.
+* As a second randomization check, create a separate script that runs the randomization script once (using `source()`) but then saves the data set with a different name, then runs it again (with `source()`), then reads in the two differently-named data sets from these two runs of the randomization script and ensures that they are identical.
 * Note: if creating two cross-randomized variables, you would not want to repeat `set.seed(seed)` before creating the second one, otherwise it would use the same assignment as the first.
+
+Above I described how data preparation scripts should be separate from analysis scripts. Randomization scripts should also be separate from data preparation scripts, i.e. any data preparation needed as an input to the randomization should be done in one script and the randomization script itself should read in the input data, create a variable with random assignments, and save a data set with the random assignments.
 
 ## Running scripts
 

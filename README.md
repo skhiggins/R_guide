@@ -173,7 +173,7 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
 * For high resolution, save graphs as .eps or .pdf files. 
-  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files to post-process your .eps files for the times when you can't get the cropping just right with `ggplot2`.
+  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop (post-process) .eps files when you can't get the cropping just right with `ggplot2`.
   * `crop_pdf` coming soon
 * For maps, use the `sf` package. This package makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
 
@@ -181,7 +181,7 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 
 * For small data sets, save as .csv with `readr::write_csv()` and read with `readr::read_csv()`. (Note: the `readr` package is part of `tidyverse`.)
     * When reading in a large .csv file from another source, it can be worth using `data.table::fread()` for speed improvements.
-    * For smaller .csv files I prefer `readr::write_csv()` due to a number of nice features such as the way it handles columns with dates.
+    * For smaller .csv files I prefer `readr::read_csv()` due to a number of nice features such as the way it handles columns with dates.
     
 * For larger data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
     * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 

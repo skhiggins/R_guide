@@ -103,17 +103,17 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
   ```r
   # Run script for example project
   
-  # PACKAGES -------------------------------------------------------
+  # PACKAGES ------------------------------------------------------------------
   library(here)
 
-  # PRELIMINARIES --------------------------------------------------
+  # PRELIMINARIES -------------------------------------------------------------
   # Control which scripts run
   run_01_ex_dataprep <- 1
   run_02_ex_reg      <- 1
   run_03_ex_table    <- 1
   run_04_ex_graph    <- 1
   
-  # RUN SCRIPTS ----------------------------------------------------
+  # RUN SCRIPTS ---------------------------------------------------------------
   
   # Read and clean example data
   if (run_01_ex_dataprep) source(here("scripts", "01_ex_dataprep.R"))
@@ -134,7 +134,7 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
   # INPUTS 
   #  here("proc", "ex_fixest.rds") # 02_ex_reg.R
   # OUTPUTS
-  #  here("results", "tables", "ex_fixest_table.tex") # tex file of table to include in paper
+  #  here("results", "tables", "ex_fixest_table.tex") # tex of table for paper
   
   # Create scatterplot of Y and X with local polynomial fit
   if (run_04_ex_graph) source(here("scripts", "04_ex_graph.R"))

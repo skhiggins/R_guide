@@ -23,6 +23,11 @@ set_theme <- function(
   axis_title_y_blank = FALSE, # to fully left-align
   aspect_ratio = NULL
 ) {
+	
+	# Dependencies
+	require(ggplot2)
+	require(stringr)
+
   # Size
   size_ <- str_c("size = ", size) # this argument always included
   

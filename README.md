@@ -13,20 +13,32 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 * Use `tidyverse` and/or `data.table` for wrangling data. 
   * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
+
 * Use `stringr` for manipulating strings.
+
 * Use `lubridate` for working with dates.
+
 * Use `conflicted` to explicitly resolve namespace conflicts.
   * `conflicted::conflict_scout()` displays namespace conflicts
   * `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
+
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
   * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
-* Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code
+
+* Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
+
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
-* I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install,  `remotes::install_github("skhiggins/tabulator")`.
+
+* I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install: 
+```r 
+remotes::install_github("skhiggins/tabulator")
+```
   * `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
+
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
+
 * `Hmisc::describe()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set.
   * This can be used in conjunction with `sink()` to print the codebook to a text file. For example:
   ```r 
@@ -65,12 +77,64 @@ Generally, within the folder where we are doing data analysis, we have:
   * figures - subfolder for figures
   * tables - subfolder for tables
 * scripts - code goes in this folder
-  * Number scripts in the order in which they should be run
+  * Number scripts in the order in which they should be run, starting with 01.
   * programs - a subfolder containing functions called by the analysis scripts (if applicable)
 
-## Master script
+## Scripts structure
 
-Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run the master script to run the entire analysis from raw data to final results (although this may be infeasible for some project, e.g. one with multiple confidential data sets that can only be accessed on separate servers).
+Because we often work with large data sets and efficiency is important, I advocate (nearly) always separating the following three actions into different scripts:
+1. Data preparation (cleaning and wrangling)
+1. Analysis (e.g. regressions)
+1. Production of figures and tables
+    
+The analysis and figure/table scripts should not change the data sets at all (no pivoting from wide to long or adding new variables); all changes to the data should be made in the data cleaning scripts. The figure/table scripts should not run the regressions or perform other analysis; that should be done in the analysis scripts. This way, if you need to add a robustness check, you don't necessarily have to rerun all the data cleaning code (unless the robustness check requires defining a new variable). If you need to make a formatting change to a figure, you don't have to rerun all the analysis code (which can take awhile to run on large data sets).
+
+Keep a "run" script, 00_run.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run `00_run.R` to run the entire analysis from raw data to final results (although this may be infeasible for some project, e.g. one with multiple confidential data sets that can only be accessed on separate servers).
+* Also include objects that can be set to 0 or 1 to only run some of the scripts from the 00_run.R script (see the example below).
+
+Here is a very brief example of a 00_run.R script.
+  * Because a project often uses multiple data sources, I usually include a brief description of the data source being used as the first part of the script name (in this case `ex` is the data source).
+  * Note that you might replace scripts 03 and 04 with .Rmd files depending on how you want to present the results.
+  
+  ```r
+  # Run script for example project
+  
+  # Control which scripts run
+  01_ex_dataprep <- 1
+  02_ex_reg      <- 1
+  03_ex_table    <- 1
+  04_ex_graph    <- 1
+  
+  # RUN SCRIPTS ----------------------------------------------------
+  
+  # Read and clean example data
+  if (01_ex_dataprep) source(here("scripts", "01_ex_dataprep.R"))
+  # INPUTS
+  #  here("data", "example.csv") # raw data from XYZ source
+  # OUTPUTS
+  #  here("proc", "example.rds") # cleaned 
+  
+  # Regress Y on X in example data
+  if (02_ex_reg) source(here("scripts", "02_ex_reg.R"))
+  # INPUTS
+  #  here("proc", "example.rds") # 01_ex_dataprep.R
+  # OUTPUTS 
+  #  here("proc", "ex_fixest.rds") # fixest object from feols regression
+  
+  # Create table of regression results
+  if (03_ex_table) source(here("scripts", "03_ex_table.R"))
+  # INPUTS 
+  #  here("proc", "ex_fixest.rds") # 02_ex_reg.R
+  # OUTPUTS
+  #  here("results", "tables", "ex_fixest_table.tex") # tex file of table to include in paper
+  
+  # Create scatterplot of Y and X with local polynomial fit
+  if (04_ex_graph) source(here("scripts", "04_ex_graph.R"))
+  # INPUTS
+  #  here("proc", "example.rds") # 01_ex_dataprep.R
+  # OUTPUTS
+  #  here("results", "figures", "ex_scatter.eps") # figure
+  ```
 
 ## Graphing
 
@@ -104,6 +168,16 @@ Keep a master script 0_master.R that lists each script in the order they should 
   * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop .eps files for the times when you can't get the cropping just right in R.
   * `crop_pdf` coming soon
 * For maps, use the `sf` package. This package makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
+
+## Saving files
+
+* For small data sets, save as .csv with `readr::write_csv()` and read with `readr::read_csv()`. (Note the `readr` package is part of `tidyverse`.)
+    * When reading in a large .csv from another source, it might be worth using `data.table::fread()` for speed improvements.
+    
+* For larger data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
+    * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file smaller but will take longer to read and write. 
+    
+* When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function you created to `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 
 ## Randomization
 

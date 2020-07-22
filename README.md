@@ -103,6 +103,10 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
   ```r
   # Run script for example project
   
+  # PACKAGES -------------------------------------------------------
+  library(here)
+
+  # PRELIMINARIES --------------------------------------------------
   # Control which scripts run
   run_01_ex_dataprep <- 1
   run_02_ex_reg      <- 1

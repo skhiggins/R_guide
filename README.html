@@ -375,45 +375,47 @@ summary {
 <div id="packages" class="section level2">
 <h2>Packages</h2>
 <ul>
-<li>Use <code>tidyverse</code> and/or <code>data.table</code> for wrangling data.
+<li><p>Use <code>tidyverse</code> and/or <code>data.table</code> for wrangling data.</p>
 <ul>
 <li>For big data (millions of observations), the efficiency advantages of <code>data.table</code> become important.</li>
 <li>The efficiency advantages of <code>data.table</code> can be important even with smaller data sets for tasks like <code>rbind</code>ing, reshaping (h/t Grant McDermott’s <a href="https://grantmcdermott.com/2020/07/02/even-more-reshape/">benchmarks</a>), etc.</li>
 </ul></li>
-<li>Use <code>stringr</code> for manipulating strings.</li>
-<li>Use <code>lubridate</code> for working with dates.</li>
-<li>Use <code>conflicted</code> to explicitly resolve namespace conflicts.
+<li><p>Use <code>stringr</code> for manipulating strings.</p></li>
+<li><p>Use <code>lubridate</code> for working with dates.</p></li>
+<li><p>Use <code>conflicted</code> to explicitly resolve namespace conflicts.</p>
 <ul>
 <li><code>conflicted::conflict_scout()</code> displays namespace conflicts</li>
 <li><code>conflicted::conflict_prefer()</code> declares the package to use in namespace conflicts, and the <code>conflict_prefer()</code> calls should be a block of code towards the top of the script, underneath the block of <code>library()</code> calls.</li>
 </ul></li>
-<li>Never use <code>setwd()</code> or absolute file paths. Instead, use relative file paths with the <code>here</code> package.
+<li><p>Never use <code>setwd()</code> or absolute file paths. Instead, use relative file paths with the <code>here</code> package.</p>
 <ul>
 <li>To avoid conflicts with the deprecated <code>lubridate::here()</code>, if using both packages in a script, specify <code>conflict_prefer(&quot;here&quot;, &quot;here&quot;)</code>.</li>
 </ul></li>
-<li>Use <code>assertthat::assert_that()</code> frequently to add programmatic sanity checks in the code</li>
-<li>Use pipes like <code>%&gt;%</code> from <code>magrittr</code>. See <a href="https://r4ds.had.co.nz/pipes.html">here</a> for more on using pipes. Other useful pipes are the compound assignment pipe <code>%&lt;&gt;%</code> (which, <a href="https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr">unlike Hadley</a>, I like to use) and the <code>%$%</code> exposition pipe.</li>
-<li>I wrote a package <a href="https://github.com/skhiggins/tabulator"><code>tabulator</code></a> for some common data wrangling tasks. To install, <code>remotes::install_github(&quot;skhiggins/tabulator&quot;)</code>.
+<li><p>Use <code>assertthat::assert_that()</code> frequently to add programmatic sanity checks in the code.</p></li>
+<li><p>Use pipes like <code>%&gt;%</code> from <code>magrittr</code>. See <a href="https://r4ds.had.co.nz/pipes.html">here</a> for more on using pipes. Other useful pipes are the compound assignment pipe <code>%&lt;&gt;%</code> (which, <a href="https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr">unlike Hadley</a>, I like to use) and the <code>%$%</code> exposition pipe.</p></li>
+<li><p>I wrote a package <a href="https://github.com/skhiggins/tabulator"><code>tabulator</code></a> for some common data wrangling tasks. To install:</p>
+<pre class="r"><code>remotes::install_github(&quot;skhiggins/tabulator&quot;)</code></pre>
 <ul>
 <li><code>tabulator::tab()</code> efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.</li>
 <li><code>tabulator::tabcount()</code> counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.</li>
 <li><code>tabulator::quantiles()</code> produces quantiles of a variable. It is a wrapper for base R <code>quantile()</code> but is easier to use, especially within <code>data.table</code>s or <code>tibble</code>s.</li>
 </ul></li>
-<li>Use <code>fixest</code> for fixed effects regressions; it is much faster than <code>lfe</code> (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).</li>
-<li><code>Hmisc::describe()</code> can be useful to print a “codebook” of the data, i.e. some summary stats about each variable in a data set.
+<li><p>Use <code>fixest</code> for fixed effects regressions; it is much faster than <code>lfe</code> (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).</p></li>
+<li><p><code>Hmisc::describe()</code> can be useful to print a “codebook” of the data, i.e. some summary stats about each variable in a data set.</p>
 <ul>
 <li>This can be used in conjunction with <code>sink()</code> to print the codebook to a text file. For example:</li>
 </ul>
 <pre class="r"><code>library(tidyverse)
 library(Hmisc)
+library(here)
 
 # Write codebook to text file
 sink(here(&quot;results&quot;, &quot;mtcars_codebook.txt&quot;))
 mtcars %&gt;% describe() %&gt;% print() # print() needed if running script from command line
 sink() # close the sink</code></pre></li>
-<li>Use <code>modelsummary</code> for formatting tables.
+<li><p>Use <code>modelsummary</code> for formatting tables.</p>
 <ul>
-<li>To use <code>modelsummary</code> w/ fixed effects regressions: <code>fixest</code> creates models of the class <code>fixest</code>; in order for <code>modelsummary</code> to extract coefficients from those models, define a function in the beginning of the scripts:</li>
+<li>To use <code>modelsummary</code> with fixed effects regressions: <code>fixest</code> creates models of the class <code>fixest</code>; in order for <code>modelsummary</code> to extract coefficients from those models, include the following code in any script where you are using both <code>modelsummary</code> and <code>fixest</code>:</li>
 </ul>
 <pre class="r"><code>glance_custom.fixest &lt;- function(x) {
   out &lt;- tibble::tibble(.rows = 1)
@@ -426,11 +428,75 @@ sink() # close the sink</code></pre></li>
 </div>
 <div id="folder-structure" class="section level2">
 <h2>Folder structure</h2>
-<p>Generally, within the folder where we are doing data analysis, we have: * An .Rproj file for the project. (This can be created in RStudio, with File &gt; New Project.) * Note that if you always open the Project within RStudio before working (see “Project” in the upper right-hand corner of RStudio) then the <code>here</code> package will work for relative filepaths. * data - only raw data go in this folder * documentation - documentation about the data goes in this folder * proc - processed data sets go in this folder * results - results go in this folder * figures - subfolder for figures * tables - subfolder for tables * scripts - code goes in this folder * Number scripts in the order in which they should be run * programs - a subfolder containing functions called by the analysis scripts (if applicable)</p>
+<p>Generally, within the folder where we are doing data analysis, we have: * An .Rproj file for the project. (This can be created in RStudio, with File &gt; New Project.) * Note that if you always open the Project within RStudio before working (see “Project” in the upper right-hand corner of RStudio) then the <code>here</code> package will work for relative filepaths. * data - only raw data go in this folder * documentation - documentation about the data goes in this folder * proc - processed data sets go in this folder * results - results go in this folder * figures - subfolder for figures * tables - subfolder for tables * scripts - code goes in this folder * programs - a subfolder containing functions called by the analysis scripts (if applicable)</p>
 </div>
-<div id="master-script" class="section level2">
-<h2>Master script</h2>
-<p>Keep a master script 0_master.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run the master script to run the entire analysis from raw data to final results (although this may be infeasible for some project, e.g. one with multiple confidential data sets that can only be accessed on separate servers).</p>
+<div id="scripts-structure" class="section level2">
+<h2>Scripts structure</h2>
+<div id="separating-scripts" class="section level3">
+<h3>Separating scripts</h3>
+<p>Because we often work with large data sets and efficiency is important, I advocate (nearly) always separating the following three actions into different scripts:</p>
+<ol style="list-style-type: decimal">
+<li>Data preparation (cleaning and wrangling)<br />
+</li>
+<li>Analysis (e.g. regressions)</li>
+<li>Production of figures and tables</li>
+</ol>
+<p>The analysis and figure/table scripts should not change the data sets at all (no pivoting from wide to long or adding new variables); all changes to the data should be made in the data cleaning scripts. The figure/table scripts should not run the regressions or perform other analysis; that should be done in the analysis scripts. This way, if you need to add a robustness check, you don’t necessarily have to rerun all the data cleaning code (unless the robustness check requires defining a new variable). If you need to make a formatting change to a figure, you don’t have to rerun all the analysis code (which can take awhile to run on large data sets).</p>
+</div>
+<div id="naming-scripts" class="section level3">
+<h3>Naming scripts</h3>
+<ul>
+<li>Include a 00_run.R script (described below).</li>
+<li>Number scripts in the order in which they should be run, starting with 01.</li>
+<li>Because a project often uses multiple data sources, I usually include a brief description of the data source being used as the first part of the script name (in the example below, <code>ex</code> describes the data source), followed by a description of the action being done (e.g. <code>dataprep</code>, <code>reg</code>, etc.), with each component of the script name separated by an underscore (<code>_</code>).</li>
+</ul>
+</div>
+<div id="run.r-script" class="section level3">
+<h3>00_run.R script</h3>
+<p>Keep a “run” script, 00_run.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run <code>00_run.R</code> to run the entire analysis from raw data to final results (although this may be infeasible for some projects, e.g. one with multiple confidential data sets that can only be accessed on separate servers). * Also include objects that can be set to 0 or 1 to only run some of the scripts from the 00_run.R script (see the example below).</p>
+<p>Below is a brief example of a 00_run.R script. (Note that you might replace scripts 03 and 04 with .Rmd files depending on how you want to present the results.)</p>
+<pre class="r"><code># Run script for example project
+
+# PACKAGES ------------------------------------------------------------------
+library(here)
+
+# PRELIMINARIES -------------------------------------------------------------
+# Control which scripts run
+run_01_ex_dataprep &lt;- 1
+run_02_ex_reg      &lt;- 1
+run_03_ex_table    &lt;- 1
+run_04_ex_graph    &lt;- 1
+
+# RUN SCRIPTS ---------------------------------------------------------------
+
+# Read and clean example data
+if (run_01_ex_dataprep) source(here(&quot;scripts&quot;, &quot;01_ex_dataprep.R&quot;), encoding = &quot;UTF-8&quot;)
+# INPUTS
+#  here(&quot;data&quot;, &quot;example.csv&quot;) # raw data from XYZ source
+# OUTPUTS
+#  here(&quot;proc&quot;, &quot;example.rds&quot;) # cleaned 
+
+# Regress Y on X in example data
+if (run_02_ex_reg) source(here(&quot;scripts&quot;, &quot;02_ex_reg.R&quot;), encoding = &quot;UTF-8&quot;)
+# INPUTS
+#  here(&quot;proc&quot;, &quot;example.rds&quot;) # 01_ex_dataprep.R
+# OUTPUTS 
+#  here(&quot;proc&quot;, &quot;ex_fixest.rds&quot;) # fixest object from feols regression
+
+# Create table of regression results
+if (run_03_ex_table) source(here(&quot;scripts&quot;, &quot;03_ex_table.R&quot;), encoding = &quot;UTF-8&quot;)
+# INPUTS 
+#  here(&quot;proc&quot;, &quot;ex_fixest.rds&quot;) # 02_ex_reg.R
+# OUTPUTS
+#  here(&quot;results&quot;, &quot;tables&quot;, &quot;ex_fixest_table.tex&quot;) # tex of table for paper
+
+# Create scatterplot of Y and X with local polynomial fit
+if (run_04_ex_graph) source(here(&quot;scripts&quot;, &quot;04_ex_graph.R&quot;), encoding = &quot;UTF-8&quot;)
+# INPUTS
+#  here(&quot;proc&quot;, &quot;example.rds&quot;) # 01_ex_dataprep.R
+# OUTPUTS
+#  here(&quot;results&quot;, &quot;figures&quot;, &quot;ex_scatter.eps&quot;) # figure</code></pre>
+</div>
 </div>
 <div id="graphing" class="section level2">
 <h2>Graphing</h2>
@@ -459,21 +525,38 @@ mtcars %&gt;% ggplot() +
 <li><p>To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the <code>width</code> and <code>height</code> arguments in <code>ggsave()</code>.</p></li>
 <li><p>For high resolution, save graphs as .eps or .pdf files.</p>
 <ul>
-<li>I’ve written a Python function <a href="https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py"><code>crop_eps</code></a> to crop .eps files for the times when you can’t get the cropping just right in R.</li>
+<li>I’ve written a Python function <a href="https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py"><code>crop_eps</code></a> to crop (post-process) .eps files when you can’t get the cropping just right with <code>ggplot2</code>.</li>
 <li><code>crop_pdf</code> coming soon</li>
 </ul></li>
 <li><p>For maps, use the <code>sf</code> package. This package makes plotting maps easy (with <code>ggplot2::geom_sf()</code>), and also makes other tasks like joining geocoordinate polygons and points a breeze.</p></li>
 </ul>
 </div>
+<div id="saving-files" class="section level2">
+<h2>Saving files</h2>
+<ul>
+<li>For small data sets, save as .csv with <code>readr::write_csv()</code> and read with <code>readr::read_csv()</code>. (Note: the <code>readr</code> package is part of <code>tidyverse</code>.)
+<ul>
+<li>When reading in a large .csv file from another source, it can be worth using <code>data.table::fread()</code> for speed improvements.</li>
+<li>For smaller .csv files I prefer <code>readr::read_csv()</code> due to a number of nice features such as the way it handles columns with dates.</li>
+</ul></li>
+<li>For larger data sets, save as .rds with <code>saveRDS()</code> or <code>readr::write_rds()</code>, and read with <code>readRDS()</code> or <code>readr::read_rds()</code>.
+<ul>
+<li><code>readr::write_rds()</code> is a wrapper for <code>saveRDS()</code> that specifies <code>compress = FALSE</code> by default. The trade-off is that compressing (the default in <code>saveRDS()</code>) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write.</li>
+</ul></li>
+<li>When doing a time-consuming <code>map*()</code> or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by <code>map*()</code> or as part of the loop. That way, if something goes wrong you won’t lose all your progress.</li>
+</ul>
+</div>
 <div id="randomization" class="section level2">
 <h2>Randomization</h2>
-<p>When randomizing assignment in a randomized control trial (RCT): * Seed: Use a seed from <a href="https://www.random.org/" class="uri">https://www.random.org/</a>: put Min 1 and Max 100000000, then click Generate, and copy the result into your script. Towards the top of the script, assign the seed with the line <code>r   seed &lt;- ... # from random.org</code> where <code>...</code> is replaced with the number that you got from <a href="https://www.random.org/">random.org</a> * Use the <code>randomizr</code> package. Here is <a href="https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf">a cheatsheet</a> of the different randomization functions. * Immediately before the line using a randomization function, include <code>set.seed(seed)</code>. * Build a randomization check: create a second variable a second time with a new name, repeating <code>set.seed(seed)</code> immediately before creating the second variable. Then check that the randomization is identical using <code>assert_that(all(df$var1 == df$var2))</code>. * It is also good to do a more manual check where you run the full script once, save the resulting data with a different name, then restart R (see instructions below), run it a second time. Then read in both data sets with the random assignment and assert that they are identical. * Note: if creating two cross-randomized variables, you would not want to repeat <code>set.seed(seed)</code> before creating the second one, otherwise it would use the same assignment as the first.</p>
+<p>When randomizing assignment in a randomized control trial (RCT): * Seed: Use a seed from <a href="https://www.random.org/" class="uri">https://www.random.org/</a>: put Min 1 and Max 100000000, then click Generate, and copy the result into your script. Towards the top of the script, assign the seed with the line <code>r   seed &lt;- ... # from random.org</code> where <code>...</code> is replaced with the number that you got from <a href="https://www.random.org/">random.org</a> * Use the <code>randomizr</code> package. Here is <a href="https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf">a cheatsheet</a> of the different randomization functions. * Immediately before the line using a randomization function, include <code>set.seed(seed)</code>. * Build a randomization check: create a second variable a second time with a new name, repeating <code>set.seed(seed)</code> immediately before creating the second variable. Then check that the randomization is identical using <code>assert_that(all(df$var1 == df$var2))</code>. * As a second randomization check, create a separate script that runs the randomization script once (using <code>source()</code>) but then saves the data set with a different name, then runs it again (with <code>source()</code>), then reads in the two differently-named data sets from these two runs of the randomization script and ensures that they are identical. * Note: if creating two cross-randomized variables, you would not want to repeat <code>set.seed(seed)</code> before creating the second one, otherwise it would use the same assignment as the first.</p>
+<p>Above I described how data preparation scripts should be separate from analysis scripts. Randomization scripts should also be separate from data preparation scripts, i.e. any data preparation needed as an input to the randomization should be done in one script and the randomization script itself should read in the input data, create a variable with random assignments, and save a data set with the random assignments.</p>
 </div>
 <div id="running-scripts" class="section level2">
 <h2>Running scripts</h2>
 <p>Once you complete a script, which you might be running line by line while you work on it, make sure the script works on a fresh R session. To do this from RStudio: * Ctrl+Shift+F10 to restart the R session running behind the scenes in RStudio. * Ctrl+Shift+Enter to run the whole script</p>
 <p>To avoid inefficiently saving and restoring the workspace when closing and opening RStudio, go to Tools &gt; Global Options… &gt; General and: * Uncheck “Restore .RData into workspace at startup” * For “Save Workspace to .RData on exit”, select “Never” * Click OK</p>
 <p>Similarly, when running R scripts from the command line, specify the <code>--vanilla</code> option to avoid ineffecient saving/restoring of the workspace.</p>
+<p>When calling <code>source()</code> within one script (or the RStudio Console) to run another script, always specify the argument <code>encoding = &quot;UTF-8&quot;</code>. This ensures that code with special characters (e.g., letters with accent marks) will run correctly.</p>
 </div>
 <div id="reproducibility" class="section level2">
 <h2>Reproducibility</h2>
@@ -483,28 +566,51 @@ mtcars %&gt;% ggplot() +
 <h2>Version control</h2>
 <div id="github" class="section level3">
 <h3>GitHub</h3>
-<p>Instructions coming soon.</p>
+<p>Github is an important tool to maintain version control and for reproducibility purposes. There are many tutorials online, like Grant Mcdermott’s slides <a href="https://raw.githack.com/uo-ec607/lectures/master/02-git/02-Git.html#9">here</a>, and I will share some tips from these notes. I will provide instructions for only the most basic commands here.</p>
+<p>We need to first create a git repository or clone an existing one.</p>
+<ul>
+<li>To clone an existing github repository, use <code>git pull repolink</code> where repolink is the link copied from the repository on Github.</li>
+<li>To initialize a new repo, use <code>git init</code> in the project directory</li>
+</ul>
+<p>Once you you have initialized a git repository and you make some local changes, you will want to update the Github repository, so that other collaborators can have access to updated files. To do so, we will use the following process:</p>
+<ul>
+<li>Check the status: <code>git status</code>. I like to use this frequently, in order to see file you’ve changed and those you still need to add or commit.</li>
+<li>Add files for staging: <code>git add &lt;filename&gt;</code>. Use this to add local changes to the staging area.</li>
+<li>Commit: <code>git commit</code>. This command saves your changes to the local repository. It will prompt you to add a commit message, which can be more concisley written as <code>git commit -m &quot;Helpful message&quot;</code></li>
+<li>Push changes to github: assuming there is a Github repository created, use <code>git push origin master</code> to push your saved local changes to the Github repo.</li>
+</ul>
+<p>However, there are often times when we encounter merge conflicts. A merge conflict is an event that occurs when Git is unable to automatically resolve differences in code between two commits. For example, if a collaborator edits a piece of code, stages, commits and pushes a change, and you try to push changes for the same piece of code, you will encounter a merge conflict. We need to figure out how fix these conflicts.</p>
+<ul>
+<li>I like to start with <code>git status</code> which shows the conflicted files.</li>
+<li>If you open up the conflicted files with any text editor, you will see a couple of things.
+<ul>
+<li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> shows the start of the merge conflict.</li>
+<li><code>=======</code> shows the break point used for comparison.</li>
+<li><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; &lt;long string&gt;</code> shows the end of merge conflict.</li>
+</ul></li>
+<li>You can now manually edit the code and delete whatever lines of code you don’t want and the special chanracters that Git added in the file. After that you can stage, commit and push your files without conflict.</li>
+</ul>
 </div>
 <div id="dropbox" class="section level3">
 <h3>Dropbox</h3>
 <p>Sometimes RStudio projects don’t play nicely with Dropbox syncing because Dropbox is trying to continuously sync the .Rproj.user file while you are editing code. This leads to a frequent pop-up error message “The process cannot access the file because it’s being used by another process.” To solve this issue on Windows: 1. Open your .Rproj project in RStudio 1. Run the function <a href="scripts/programs/dropbox_project_sync_off.R"><code>dropbox_project_sync_off()</code></a> (<a href="https://community.rstudio.com/t/dropbox-conflicts-with-rproj-user/54059/2">details</a>)</p>
-</div>
-<div id="linking-github-and-dropbox-for-a-project" class="section level3">
-<h3>Linking Github and Dropbox for a project</h3>
-<p>Here I will present the best methods for linking a project on both Dropbox and Github, which is inspired, but modified from <a href="https://github.com/kbjarkefur/GitHubDropBox">this tutorial</a>). Before going ahead, make sure you have both a Github account, a Dropbox account, and the Dropbox app downloaded on your computer. The main idea of this setup is that our Dropbox will serve as an extra clone where we can share new raw data, but the main version control will be done on Github.</p>
+<div id="linking-github-and-dropbox-for-a-project" class="section level4">
+<h4>Linking Github and Dropbox for a project</h4>
+<p>Here I will present the best methods for linking a project on both Dropbox and Github, which is inspired, but modified from <a href="https://github.com/kbjarkefur/GitHubDropBox">this tutorial</a>). The RA (or whomever is setting up the project) should complete ALL of the following steps. Others need to do only the steps marked with (All). Before going ahead, make sure you have both a Github account, a Dropbox account, and the Dropbox app downloaded on your computer. The main idea of this setup is that our Dropbox will serve as an extra clone where we can share new raw data, but the main version control will be done on Github.</p>
 <ol style="list-style-type: decimal">
 <li><p>First, establish the Dropbox folder for the project. Create a Dropbox folder, share it with all project members, and let’s call the project we are working on “SampleProject”. In this step, we aren’t doing anything with Github.</p></li>
-<li><p>Next, create a github repo for the project, name it identically to the Dropbox folder and clone it locally to your computer. Clone the repo locally by going to terminal. I will clone this in my home directory. To do so, I would type</p></li>
+<li><p>The RA will now create a github repo for the project, name it identically to the Dropbox folder and clone it locally to your computer.</p></li>
+<li><p>(All) Clone the github repo locally by going to terminal. I will clone this in my home directory. To do so, I would type</p></li>
 </ol>
 <pre><code>cd noahforougi
 git clone repolink</code></pre>
 <p>where repolink is the link copied from the repository page on Github.com. It is important that when you clone this repository, you are doing it in a directory that is not associated with Dropbox.</p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="5" style="list-style-type: decimal">
 <li>The next step is to clone the repository again, but this time <strong>in the local Dropbox directory</strong>. So, for example, say I have cloned the project in this directory <code>/Users/noahforougi/SampleProject/</code>. I will now change the directory to my Dropbox directory and clone the Github repo to the Dropbox.</li>
 </ol>
 <pre><code>cd /Dropbox/SampleProject/
 git clone repolink</code></pre>
-<ol start="4" style="list-style-type: decimal">
+<ol start="6" style="list-style-type: decimal">
 <li>Now, we want to create a more formal project structure. To do so, we are going to edit the Dropbox directly (we will only be doing this once!). Follow the conventions mentioned earlier in this guide, create the project on Dropbox, but <strong>exclude the proc</strong> folder. The dropbox should look something like this:</li>
 </ol>
 <ul>
@@ -519,8 +625,8 @@ git clone repolink</code></pre>
 </ul></li>
 </ul></li>
 </ul>
-<ol start="5" style="list-style-type: decimal">
-<li>We want also this on our local repo (in my case, the /Users/noahforougi/ directory). We will only have to do this once, but we are going to manually copy and paste all the folders into our local repo. Additionally, create a proc/ folder locally. This allows us to share <strong>raw</strong> data via Dropbox, but the <strong>processed</strong> data will be generated by actually running the scripts locally. Our project should look like this:</li>
+<ol start="7" style="list-style-type: decimal">
+<li>(All) We want the Dropbox project structure (which the RA has created) on our local repo which is synched with Github(in my case, the /Users/noahforougi/ directory). We will only have to do this once, but we are going to manually copy and paste all the folders into our local repo. Additionally, create a proc/ folder locally. This allows us to share <strong>raw</strong> data via Dropbox, but the <strong>processed</strong> data will be generated by actually running the scripts locally. Our project should look like this:</li>
 </ol>
 <ul>
 <li>noahforougi/
@@ -536,21 +642,15 @@ git clone repolink</code></pre>
 </ul></li>
 </ul></li>
 </ul>
-<ol start="6" style="list-style-type: decimal">
-<li><strong>This is a crucial step</strong>. We want to create a .gitignore file in <strong>both the local and Dropbox directory</strong>. This means when we push our local changes to Github, we are ignoring the data/, proc/ and documentation/ folders. This is crucial because of data confidentiality reasons. There are plenty of tutorials online about how to create a .gitignore file. We are going to need to do the following step two times. First, locate your local project directory and do the following:</li>
+<ol start="8" style="list-style-type: decimal">
+<li>(All) We want to create a .gitignore file in the local directory. This means when we push our local changes to Github, we are ignoring the data/, proc/ and documentation/ folders. This is crucial because of data confidentiality reasons. There are plenty of tutorials online about how to create a .gitignore file. In the gitignore file please include the following:</li>
 </ol>
-<p><code>touch .gitignore</code> <code>vim .gitignore</code></p>
-<ul>
-<li>A text editor will open. Press the escape key to enter and exit text-entry mode. Add in the following text:</li>
-</ul>
 <p>/documentation/* <br> /data/* <br> /proc/*</p>
-<ul>
-<li>To exit the vim editor, press the escape key, and then type :wq, and press enter. `</li>
-</ul>
-<ol start="7" style="list-style-type: decimal">
-<li>Now, go back into the Dropbox folder and repeat this step!</li>
+<ol start="9" style="list-style-type: decimal">
+<li>Now, go back into the Dropbox folder and repeat this step. We need to create a .gitignore file in the Dropbox as well.</li>
 </ol>
 <p>Our project structure is complete. We can now make local edits to the scripts and results and push them to Github. All other project members will be able to receive these changes and update their local proc/ files by running the newly synched scripts. The main interactions should be to push local edits to Github. You should <strong>not</strong> be making edits to the scripts located on the Dropbox. If we want to share new raw data, we will need to copy and paste that locally, but it will not cause issues because of the .gitignore file.</p>
+</div>
 </div>
 </div>
 <div id="misc." class="section level2">

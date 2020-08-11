@@ -13,22 +13,15 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 * Use `tidyverse` and/or `data.table` for wrangling data. 
   * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
-
 * Use `stringr` for manipulating strings.
-
 * Use `lubridate` for working with dates.
-
 * Use `conflicted` to explicitly resolve namespace conflicts.
   * `conflicted::conflict_scout()` displays namespace conflicts
   * `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
-
 * Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
   * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
-
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
-
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
-
 * I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install: 
   ```r 
   remotes::install_github("skhiggins/tabulator")
@@ -36,9 +29,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
-
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
-
 * `Hmisc::describe()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set.
   * This can be used in conjunction with `sink()` to print the codebook to a text file. For example:
   ```r 
@@ -51,7 +42,6 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   mtcars %>% describe() %>% print() # print() needed if running script from command line
   sink() # close the sink
   ```
-
 * Use `modelsummary` for formatting tables. 
   * To use `modelsummary` with fixed effects regressions: `fixest` creates models of the class `fixest`; in order for `modelsummary` to extract coefficients from those models, include the following code in any script where you are using both `modelsummary` and `fixest`:
   ```r
@@ -64,7 +54,6 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   }
   ```
   
-
 ## Folder structure
 
 Generally, within the folder where we are doing data analysis, we have:

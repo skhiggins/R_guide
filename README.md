@@ -43,7 +43,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   sink() # close the sink
   ```
 * Use `modelsummary` for formatting tables. 
-  ```
+  
   
 ## Folder structure
 

@@ -204,7 +204,7 @@ When calling `source()` within one script (or the RStudio Console) to run anothe
 
 Use `renv` (instead of `packrat`) to manage the packages used in an RStudio project, avoiding conflicts related to package versioning.
 * `renv::init()` will develop a "local library" of the packages employed in a project. It will create the following files and folders in the project directory: `renv.lock`, `.Rprofile`, and `renv/`. Binaries of the project's packages will be stored in the `renv/library/` subfolder.
-* When working on the project, use `renv::snapshot()` to update your `renv`-related files. It is probably a good idea to run this before wrapping up a project.
+* When working on the project, use `renv::snapshot()` to update your `renv`-related files. Make sure these are updated when pushing project changes to GitHub, sharing files with others, or preparing the replication package.
 * When deploying the project on a different machine, make sure that the `renv.lock`, `.Rprofile`, and `renv/` files/folders are present. The `renv/library/` subfolder, containing system-specific package binaries, should be excluded. Once these requirements are met, you can launch the project and run `renv::restore()` to restore all packages in the new machine, in their appropriate versions.
 
 ## Version control

@@ -177,7 +177,7 @@ When randomizing assignment in a randomized control trial (RCT):
   seed <- ... # from random.org
   ```
   where `...` is replaced with the number that you got from [random.org](https://www.random.org/) 
-* Use the `randomizr` package. Here is [a cheatsheet](https://alexandercoppock.com/papers/randomizr_cheatsheet.pdf) of the different randomization functions.
+* Use the `randomizr` package. Here is [a cheatsheet](https://github.com/rstudio/cheatsheets/blob/master/randomizr.pdf) of the different randomization functions.
 * Immediately before the line using a randomization function, include `set.seed(seed)`.
 * Build a randomization check: create a second variable a second time with a new name, repeating `set.seed(seed)` immediately before creating the second variable. Then check that the randomization is identical using `assert_that(all(df$var1 == df$var2))`.
 * As a second randomization check, create a separate script that runs the randomization script once (using `source()`) but then saves the data set with a different name, then runs it again (with `source()`), then reads in the two differently-named data sets from these two runs of the randomization script and ensures that they are identical.

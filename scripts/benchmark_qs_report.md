@@ -10,14 +10,16 @@ The other part of the story is looking at the size of the saved .rds/.qs/.fst ob
 
 Saving a file              |  Size of saved file
 :-------------------------:|:-------------------------:
-![](/Users/noahforougi/R_guide/results/figures/time_saved.png)  |  ![](/Users/noahforougi/R_guide/results/figures/size_saved.png)
+![](https://raw.githubusercontent.com/noahforougi/R_guide/master/results/figures/time_saved.png?raw=true)  |  ![](https://raw.githubusercontent.com/noahforougi/R_guide/master/results/figures/size_saved.png?raw=true) 
 
 
 It is important to note that these are all with the default settings of `qsave()`, and an important point of the package is that it is highly parameterized and can be customized to choose the right level of speed and compression, depending on the user needs. Again, this can be seen in the `qs()` package github. 
 
 The other thing we might want to look at is the speed of reading the files that we saved. Here we plot the average time in seconds it takes to read a file with each of the packages. `fst()` performs the best, among the rds functions and the `qread()` function, with default settings. 
+![alt text](https://raw.githubusercontent.com/noahforougi/R_guide/master/results/figures/time_read.png?raw=true){ width=50% }
 
-![](/Users/noahforougi/R_guide/results/figures/time_read.png){ width=50% }
+
+
 
 
 Overall it seems that the `qs()` package comes with the ideal balance for speed and compression, and is highly customizable to allow for more speed or compression, depending on user needs. Moreover, the `qs()` package allows to serialize and deserialize non data frame objects, which is currently all that is allowed in the `fst()` package. 

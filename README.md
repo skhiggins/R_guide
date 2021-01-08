@@ -164,8 +164,8 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     * When reading in a large .csv file from another source, it can be worth using `data.table::fread()` for speed improvements.
     * For smaller .csv files I prefer `readr::read_csv()` due to a number of nice features such as the way it handles columns with dates.
     
-* For larger data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
-    * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 
+* For larger objects, save as .qs with `qs::qsave()`  and read with `qs::qread()`, from the`qs` package. 
+    * The [`qs` package](https://github.com/traversc/qs) is a package that is highly parameterized, allowing one to serialize and deserialize objects both quickly and efficiently. See [here](https://github.com/noahforougi/R_guide/blob/master/scripts/benchmark_qs_report.md) for a benchmarking of the `qs` functions compared with `readr::read_rds()/readr::write_rds()`, `saveRDS(),readRDS()`, and `read.fst()/write.fst()`. The code for the benchmarking can be found [here](https://github.com/noahforougi/R_guide/blob/master/scripts/benchmark_qs.R).
     
 * When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 

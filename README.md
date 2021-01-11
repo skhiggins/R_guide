@@ -33,7 +33,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   ```r 
   library(tidyverse)
   library(Hmisc)
-	library(skimr)
+  library(skimr)
   library(here)
   
   # Write codebook to text file

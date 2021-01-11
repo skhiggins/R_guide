@@ -22,28 +22,26 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
 * Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
 * Use pipes like `%>%` from `magrittr`. See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
-* I wrote a package [`tabulator`](https://github.com/skhiggins/tabulator) for some common data wrangling tasks. To install: 
-  ```r 
-  remotes::install_github("skhiggins/tabulator")
-  ```
+* Use my package `tabulator` for some common data wrangling tasks. 
   * `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
-* `Hmisc::describe()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set.
+* Use `modelsummary` for formatting tables. 
+* `Hmisc::describe()` and `skimr::skim()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set. Since they do not provide identical information, it might be best to run both.
   * This can be used in conjunction with `sink()` to print the codebook to a text file. For example:
   ```r 
   library(tidyverse)
   library(Hmisc)
+	library(skimr)
   library(here)
   
   # Write codebook to text file
   sink(here("results", "mtcars_codebook.txt"))
   mtcars %>% describe() %>% print() # print() needed if running script from command line
+	mtcars %>% skim() %>% print()
   sink() # close the sink
   ```
-* Use `modelsummary` for formatting tables. 
-  
   
 ## Folder structure
 
@@ -164,8 +162,11 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     * When reading in a large .csv file from another source, it can be worth using `data.table::fread()` for speed improvements.
     * For smaller .csv files I prefer `readr::read_csv()` due to a number of nice features such as the way it handles columns with dates.
     
-* For larger data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
+* For medium-sized data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
     * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 
+		
+* For large data sets, the `qs` package performs quick serialization of R objects. Our benchmarks suggest that `qs::qsave()` compresses files slightly more than `saveRDS()` and is faster than `readr::write_rds()`, so it provides the best of both worlds.
+		* We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
     
 * When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 
@@ -263,7 +264,7 @@ git clone repolink
 - Dropbox/
   - SampleProject/
     - data/
-\   - documentation/
+    - documentation/
     - README.md
     - results/
     - scripts/

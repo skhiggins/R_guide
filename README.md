@@ -39,7 +39,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   # Write codebook to text file
   sink(here("results", "mtcars_codebook.txt"))
   mtcars %>% describe() %>% print() # print() needed if running script from command line
-	mtcars %>% skim() %>% print()
+  mtcars %>% skim() %>% print()
   sink() # close the sink
   ```
   
@@ -166,7 +166,7 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 
 		
 * For large data sets, the `qs` package performs quick serialization of R objects. Our benchmarks suggest that `qs::qsave()` compresses files slightly more than `saveRDS()` and is faster than `readr::write_rds()`, so it provides the best of both worlds.
-		* We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
+    * We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
     
 * When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 

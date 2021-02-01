@@ -165,13 +165,11 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     )
   ```  
   See [`set_theme_reprex.R`](scripts/set_theme_reprex.R) for more examples of its use with changes to its defaults, and look at the function itself to see what the arguments and graph formatting settings that it can change are. (Pull requests welcome to expand it to more use cases.) 
-* For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
- * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
-* For high resolution, save graphs as .eps files. (This is better than .pdf given that .eps are editable images, which is sometimes required by journals.)
-  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop (post-process) .eps files when you can't get the cropping just right with `ggplot2`.
 * For maps, use the `sf` package. This package makes plotting maps easy (with `ggplot2::geom_sf()`), and also makes other tasks like joining geocoordinate polygons and points a breeze.
 
 ## Saving files
+
+### Data sets
 
 * For small data sets, save as .csv with `readr::write_csv()` and read with `readr::read_csv()`. (Note: the `readr` package is part of `tidyverse`.)
     * When reading in a large .csv file from another source, it can be worth using `data.table::fread()` for speed improvements.
@@ -184,6 +182,14 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     * We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
     
 * When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
+
+### Graphs
+
+* Save graphs with `ggsave()`.
+  * For reproducible graphs (independent of the size of your Plots pane in RStudio), always specify the `width` and `height` arguments in `ggsave()`.
+  * To see what the final graph looks like, open the file that you save since its appearance will differ from what you see in the RStudio Plots pane when you specify the `width` and `height` arguments in `ggsave()`.
+* For higher (in fact, infinite) resolution, save graphs as .eps files. (This is better than .pdf given that .eps are editable images, which is sometimes required by journals.)
+  * I've written a Python function [`crop_eps`](https://github.com/skhiggins/PythonTools/blob/master/crop_eps.py) to crop (post-process) .eps files when you can't get the cropping just right with `ggplot2`.
 
 ## Randomization
 

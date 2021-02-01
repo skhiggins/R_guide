@@ -45,7 +45,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   
 ## Folder structure
 
-Generally, within the folder where we are doing data analysis, we have:
+Generally, within a project folder, we have a subfolder called `analysis` where we are doing data analysis (and other sub-folders like `paper` where the paper draft is saved). Within the `analysis` subfolder, we have:
 * An .Rproj file for the project. (This can be created in RStudio, with File > New Project.)
   * Note that if you always open the Project within RStudio before working (see "Project" in the upper right-hand corner of RStudio) then the `here` package will work for relative filepaths.
 * data - only raw data go in this folder
@@ -125,7 +125,15 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 
 ## Graphing
 
-* Use `ggplot2`, and for graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
+* Use `ggplot2`
+* For graphs with color consider colorblind-friendly palettes such as `scale_color_viridis_*()` or `ggthemes::scale_color_colorblind()`.
+* Test whether graphs are colorblind-friendly and print-friendly by creating grayscale versions of them using `colorblindr::edit_colors()` as follows. A full reproducible example is in [`grayscale_reprex.R`](scripts/grayscale_reprex.R).
+	```r
+	library(tidyverse)
+	library(colorblindr)
+	
+	
+	```
 * I wrote a function [`set_theme.R`](scripts/programs/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
   ```r
   library(tidyverse)
@@ -203,7 +211,7 @@ When calling `source()` within one script (or the RStudio Console) to run anothe
 
 ## Reproducibility 
 
-Use `renv` (instead of `packrat`) to manage the packages used in an RStudio project, avoiding conflicts related to package versioning.
+Use `renv` to manage the packages used in an RStudio project, avoiding conflicts related to package versioning.
 * `renv::init()` will develop a "local library" of the packages employed in a project. It will create the following files and folders in the project directory: `renv.lock`, `.Rprofile`, and `renv/`. Binaries of the project's packages will be stored in the `renv/library/` subfolder.
 * When working on the project, use `renv::snapshot()` to update your `renv`-related files. Make sure these are updated when pushing project changes to GitHub, sharing files with others, or preparing the replication package.
 * When deploying the project on a different machine, make sure that the `renv.lock`, `.Rprofile`, and `renv/` files/folders are present. The `renv/library/` subfolder, containing system-specific package binaries, should be excluded. Once these requirements are met, you can launch the project and run `renv::restore()` to restore all packages in the new machine, in their appropriate versions.
@@ -295,4 +303,4 @@ Some additional tips:
 
 * Error handling: use `purrr::possibly()` and `purrr::safely()` rather than base R `tryCatch()`
 * Progress bars: for intensive `purrr::map*()` tasks you can easily add progress bars with `dplyr::progress_estimated()` ([instructions](https://adisarid.github.io/post/2019-01-24-purrrying-progress-bars/))
-* If you need to log some printed output, a quick and dirty way is `sink()`. 
+* If you need to log some printed output, a quick way is `sink()`. 

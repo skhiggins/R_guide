@@ -132,7 +132,15 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 	library(tidyverse)
 	library(colorblindr)
 	
-	
+	# Color graph
+	in_color <- mtcars %>% ggplot() +
+		geom_point(aes(x = disp, y = wt, color = mpg)) +
+		scale_color_viridis_c(direction = -1) +
+		theme_classic()
+		
+	# Black and white graph
+	in_bw <- in_color %>% edit_colors(desaturate)
+	in_bw %>% plot() # use grid::grid.draw() for maps
 	```
 * I wrote a function [`set_theme.R`](scripts/programs/set_theme.R) to standardize and facilitate graph formatting. It can be added to a `ggplot` object like any other theme would be, e.g.:
   ```r

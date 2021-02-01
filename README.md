@@ -134,9 +134,9 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
 	
 	# Color graph
 	in_color <- mtcars %>% ggplot() +
-		geom_point(aes(x = disp, y = wt, color = mpg)) +
-		scale_color_viridis_c(direction = -1) +
-		theme_classic()
+	  geom_point(aes(x = disp, y = wt, color = mpg)) +
+	  scale_color_viridis_c(direction = -1) +
+	  theme_classic()
 		
 	# Black and white graph
 	in_bw <- in_color %>% edit_colors(desaturate)

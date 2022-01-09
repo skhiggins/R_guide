@@ -77,7 +77,7 @@ The analysis and figure/table scripts should not change the data sets at all (no
 Keep a "run" script, 00_run.R that lists each script in the order they should be run to go from raw data to final results. Under the name of each script should be a brief description of the purpose of the script, as well all the input data sets and output data sets that it uses. Ideally, a user could run `00_run.R` to run the entire analysis from raw data to final results (although this may be infeasible for some projects, e.g. one with multiple confidential data sets that can only be accessed on separate servers).
 * Also include objects that can be set to 0 or 1 to only run some of the scripts from the 00_run.R script (see the example below).
 
-Below is a brief example of a 00_run.R script. (Note that you might replace scripts 03 and 04 with .Rmd files depending on how you want to present the results.)
+Below is a brief example of a 00_run.R script. <!-- (Note that you might replace scripts 03 and 04 with .Rmd files depending on how you want to present the results.) -->
   
   ```r
   # Run script for example project
@@ -177,10 +177,10 @@ Below is a brief example of a 00_run.R script. (Note that you might replace scri
     
 * For medium-sized data sets, save as .rds with `saveRDS()` or `readr::write_rds()`, and read with `readRDS()` or `readr::read_rds()`. 
     * `readr::write_rds()` is a wrapper for `saveRDS()` that specifies `compress = FALSE` by default. The trade-off is that compressing (the default in `saveRDS()`) will make the file substantially smaller so it takes up less disk space, but it will take longer to read and write. 
-		
+<!---		
 * For large data sets when read and write performance becomes important, the `qs` package performs quick serialization of R objects. Our [benchmarks](https://github.com/noahforougi/R_guide/blob/master/benchmarking_qs.md) suggest that `qs::qsave()` compresses files slightly more than `saveRDS()` and is faster than `readr::write_rds()`, so it provides the best of both worlds.
     * We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
-    
+--->    
 * When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 
 ### Graphs
@@ -220,7 +220,7 @@ To avoid inefficiently saving and restoring the workspace when closing and openi
 
 Similarly, when running R scripts from the command line, specify the `--vanilla` option to avoid ineffecient saving/restoring of the workspace.
 
-When calling `source()` within one script (or the RStudio Console) to run another script, always specify the argument `encoding = "UTF-8"`. This ensures that code with special characters (e.g., letters with accent marks) will run correctly.
+When calling `source()` within one script to run another script, always specify the argument `encoding = "UTF-8"`. This ensures that code with special characters (e.g., letters with accent marks) will run correctly.
 
 ## Reproducibility 
 

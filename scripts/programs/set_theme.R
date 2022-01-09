@@ -18,6 +18,8 @@ set_theme <- function(
   x_title_color = "black",
   legend_text_size = size,
   legend_position = "none",
+  legend_key_fill = NA,
+  legend_key_color = NA,
   plot_title_position = NULL,
   plot_margin = theme_classic()$plot.margin,
   axis_title_y_blank = FALSE, # to fully left-align
@@ -68,6 +70,31 @@ set_theme <- function(
     y_title <- "element_blank()" # overwrite what it was written as above
   }
   
+  # Legend key
+  if (is.na(legend_key_fill) & is.na(legend_key_color)) {
+    legend_key <- "element_blank()"
+  } else {
+    if (is.na(legend_key_fill) & !(is.na(legend_key_color))) {
+      legend_key <- str_c("element_rect(", 
+        "fill = NA", ",",
+        "color = '", legend_key_color, "'", ", ",
+        ")"
+      )      
+    } else if (!(is.na(legend_key_fill)) & is.na(legend_key_color)) {
+      legend_key <- str_c("element_rect(", 
+        "fill = '", legend_key_fill, "'", ", ",
+        "color = NA",
+        ")"
+      )      
+    } else { # neither missing
+      legend_key <- str_c("element_rect(", 
+        "fill = '", legend_key_fill, "'", ", ",
+        "color = '", legend_key_color, "'",
+        ")"
+      )
+    }
+  }
+  
   theme + theme(
     plot.title = element_text(size = title_size, hjust = title_hjust),
     plot.title.position = plot_title_position,
@@ -77,7 +104,7 @@ set_theme <- function(
     axis.text.y = element_text(size = y_text_size, color = y_text_color),
     axis.text.x = element_text(size = x_text_size, color = x_text_color),
     axis.line = element_blank(), # manual axes
-    legend.key = element_rect(fill = "white"),
+    legend.key = eval(parse(text = legend_key)),
     legend.text = element_text(size = legend_text_size),
     legend.title = element_text(size = legend_text_size),
     aspect.ratio = aspect_ratio,

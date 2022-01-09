@@ -1,6 +1,9 @@
 # Simple examples of using set_theme() to standardize graph formatting
 #  Sean Higgins
 
+# Note: I recommend saving figures as .eps, but here I save as .pdf so that 
+#  the figures are easier to view on GitHub.
+
 # PACKAGES --------------------------------------------------------------------
 library(tidyverse)
 library(here)
@@ -19,7 +22,7 @@ mtcars %>% ggplot() +
   labs(y = "Horsepower", x = "Weight") +
   set_theme()
 ggsave(
-  here("results", "figures", "set_theme_defaults.eps"), 
+  here("results", "figures", "set_theme_defaults.pdf"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
     # (otherwise will depend on size of Rstudio plots pane)
@@ -45,7 +48,38 @@ mtcars %>% ggplot() +
     plot_margin = unit(c(t = 2, r = 2, b = 2, l = 2), "pt")
   )
 ggsave(
-  here("results", "figures", "set_theme_with_axes.eps"), 
+  here("results", "figures", "set_theme_with_axes.pdf"), 
+  width = 8, # important to explicitly set these arguments 
+  height = 4 # for reproducibility of graphs 
+  # (otherwise will depend on size of Rstudio plots pane)
+)
+
+# Add colors and legend
+colorblind_palette <- c(
+  "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"
+)
+mtcars %>% ggplot() + 
+  geom_point(aes(y = hp, x = wt, 
+    color = as.factor(cyl)), size = 2 # bigger size to see colors
+  ) +
+  labs(y = "Horsepower", x = "Weight", color = "Cylinders") +
+  geom_hline(yintercept = 0) + 
+  geom_vline(xintercept = 0) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) + # get rid of space below 0
+  scale_x_continuous(expand = expansion(mult = c(0, 0.01))) + # and at top/right of plot
+    # note that expand = c(0, 0) would remove any space beyond scale but 
+    # that would lead the points with highest x or y values to get partially cut off
+    # so expand = expansion(mult = c(0, 0.01)) expands top/right by 1%
+    # see https://ggplot2.tidyverse.org/reference/expansion.html
+  scale_color_manual(values = colorblind_palette) +
+  set_theme(
+    y_title_margin = "r = 5",
+    x_title_margin = "t = 5", 
+    plot_margin = unit(c(t = 2, r = 2, b = 2, l = 2), "pt"), 
+    legend_position = "right" # default in set_theme() is "none"
+  )
+ggsave(
+  here("results", "figures", "set_theme_with_colors.pdf"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
   # (otherwise will depend on size of Rstudio plots pane)
@@ -60,7 +94,7 @@ mtcars %>% ggplot() +
     # no vertical axis since histogram doesn't start at 0
   set_theme()
 ggsave(
-  here("results", "figures", "set_theme_histogram.eps"), 
+  here("results", "figures", "set_theme_histogram.pdf"), 
   width = 8, # important to explicitly set these arguments 
   height = 4 # for reproducibility of graphs 
   # (otherwise will depend on size of Rstudio plots pane)

@@ -6,6 +6,7 @@
 
 # PACKAGES --------------------------------------------------------------------
 library(tidyverse)
+library(ggthemes) # for colorblind palette
 library(here)
 
 # FUNCTIONS -------------------------------------------------------------------
@@ -55,9 +56,6 @@ ggsave(
 )
 
 # Add colors and legend
-colorblind_palette <- c(
-  "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"
-)
 mtcars %>% ggplot() + 
   geom_point(aes(y = hp, x = wt, 
     color = as.factor(cyl)), size = 2 # bigger size to see colors
@@ -71,7 +69,7 @@ mtcars %>% ggplot() +
     # that would lead the points with highest x or y values to get partially cut off
     # so expand = expansion(mult = c(0, 0.01)) expands top/right by 1%
     # see https://ggplot2.tidyverse.org/reference/expansion.html
-  scale_color_manual(values = colorblind_palette) +
+  scale_color_colorblind() +
   set_theme(
     y_title_margin = "r = 5",
     x_title_margin = "t = 5", 

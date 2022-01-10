@@ -2,6 +2,8 @@
 
 This guide provides instructions for using R on research projects. Its purpose is to use with collaborators and research assistants to make code consistent, easier to read, transparent, and reproducible.
 
+Also see my [Python Guide](https://github.com/skhiggins/Python_guide) and [Stata Guide](https://github.com/skhiggins/Stata_guide).
+
 ## Style
 
 For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).

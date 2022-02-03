@@ -15,6 +15,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 * Use `tidyverse` and/or `data.table` for wrangling data. 
   * For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   * The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
+  * An excellent primer on `data.table` (designed for users transitioning from Stata to R, but very useful for anyone using `data.table` in R) is available at [Stata2R](https://stata2r.github.io/data.table/).
 * Use `stringr` for manipulating strings.
 * Use `lubridate` for working with dates.
 * Use `conflicted` to explicitly resolve namespace conflicts.
@@ -29,6 +30,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   * `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.
   * `tabulator::quantiles()` produces quantiles of a variable. It is a wrapper for base R `quantile()` but is easier to use, especially within `data.table`s or `tibble`s.
 * Use `fixest` for fixed effects regressions; it is much faster than `lfe` (and also appears to be faster than the best current Julia or Python implementations of fixed effects regression).
+  * An excellent primer on `fixest` (designed for users transitioning from Stata to R, but very useful for anyone using `fixest` in R) is available at [Stata2R](https://stata2r.github.io/fixest/).
 * Use `modelsummary` for formatting tables. 
 * `Hmisc::describe()` and `skimr::skim()` can be useful to print a "codebook" of the data, i.e. some summary stats about each variable in a data set. Since they do not provide identical information, it might be best to run both.
   * This can be used in conjunction with `sink()` to print the codebook to a text file. For example:

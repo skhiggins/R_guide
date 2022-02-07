@@ -25,8 +25,12 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   - To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
 - Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
 - Use pipes like `%>%` from `magrittr`. 
-    - See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
-    - As of R 4.1.0, there is a built-in pipe `|>`. In many cases this can be used the same way as `%>%` (and, if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package). The exception is that the built-in `|>` pipe does not yet have a placeholder element (analogous to `.` for the `magrittr` pipe `%>%`). See more details [here](https://www.r-bloggers.com/2021/05/the-new-r-pipe/).
+    - See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. 
+    - Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
+    - As of R 4.1.0, there is a built-in pipe `|>`. See more details [here](https://www.r-bloggers.com/2021/05/the-new-r-pipe/).
+        - In many cases this can be used the same way as `%>%`.
+        - So if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package. 
+        - The exception to being able to use the built-in pipe `|>` the same way as the `magrittr` pipe `%>%` is that `|>` does not yet have a placeholder element (the placeholder for `%>%` is `.`). 
 - Use my package `tabulator` for some common data wrangling tasks. 
   - `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   - `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.

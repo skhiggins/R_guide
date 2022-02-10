@@ -13,9 +13,10 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 ## Packages
 
 - Use `tidyverse` and/or `data.table` for wrangling data. 
+  - An excellent resource on `tidyverse` is the book [R for Data Science](https://r4ds.had.co.nz/) (free online).
+  - An excellent primer on `data.table` (designed for users transitioning from Stata to R, but very useful for anyone using `data.table` in R) is available at [Stata2R](https://stata2r.github.io/data.table/).
   - For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   - The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
-  - An excellent primer on `data.table` (designed for users transitioning from Stata to R, but very useful for anyone using `data.table` in R) is available at [Stata2R](https://stata2r.github.io/data.table/).
 - Use `stringr` for manipulating strings.
 - Use `lubridate` for working with dates.
 - Use `conflicted` to explicitly resolve namespace conflicts.

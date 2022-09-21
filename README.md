@@ -17,13 +17,18 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   - An excellent primer on `data.table` (designed for users transitioning from Stata to R, but very useful for anyone using `data.table` in R) is available at [Stata2R](https://stata2r.github.io/data.table/).
   - For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   - The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
-- Use `stringr` for manipulating strings.
+- Use `stringr` for manipulating strings instead of base R.
+  - Use `stringr::str_c()` instead of `paste()`
+  - Use `stringr::str_sub()` instead of `substr()`
+- Use `purr::map_*()` functions instead of lapply/sapply
+  - Within `purr::map_*()` functions as of R 4.1 you can use \() instead of function(). This is known as "syntactic sugar" as it is just shorthand to make the code more concise.
 - Use `lubridate` for working with dates.
 - Use `conflicted` to explicitly resolve namespace conflicts.
   - `conflicted::conflict_scout()` displays namespace conflicts
   - `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
 - Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
-  - To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`.
+  - To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`. Always put `library(here)` last in the packages section if for some reason the user has an outdated version of lubridate
+- Never use numbers to subset a data set's columns. This is very error prone code because if the data set changes in later edits to the previous scripts, the code will be wrong.
 - Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
 - Use pipes like `%>%` from `magrittr`. 
     - See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. 

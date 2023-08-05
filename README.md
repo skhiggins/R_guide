@@ -14,7 +14,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 
 - Use `tidyverse` and/or `data.table` for wrangling data. 
   - An excellent resource on `tidyverse` is the book [R for Data Science](https://r4ds.had.co.nz/) (free online).
-  - An excellent primer on `data.table` (designed for users transitioning from Stata to R, but very useful for anyone using `data.table` in R) is available at [Stata2R](https://stata2r.github.io/data.table/).
+  - An excellent primer on `data.table` is available [here](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html). Additionally, there is a `data.table` guide designed for users transitioning from Stata to R at [Stata2R](https://stata2r.github.io/data.table/) and a comparison of `data.table` and `dplyr` [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/)
   - For big data (millions of observations), the efficiency advantages of `data.table` become important. 
   - The efficiency advantages of `data.table` can be important even with smaller data sets for tasks like `rbind`ing, reshaping (h/t Grant McDermott's [benchmarks](https://grantmcdermott.com/2020/07/02/even-more-reshape/)), etc.
 - Use `stringr` for manipulating strings.

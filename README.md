@@ -6,7 +6,7 @@ Also see my [Python Guide](https://github.com/skhiggins/Python_guide) and [Stata
 
 ## Style
 
-For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/).
+For coding style practices, follow the [tidyverse style guide](https://style.tidyverse.org/) and the [chapter of R for Data Science (2nd Edition) on code style] (https://r4ds.hadley.nz/workflow-style).
 - While you should read the style guide and do your best to follow it, once you save the script you can use `styler::style_file()` to fix its formatting and ensure it adheres to the [tidyverse style guide](https://style.tidyverse.org/).
   - Note: `styler::style_file()` overwrites files (if styling results in a change of the code to be formatted). The documentation strongly suggests to only style files that are under version control or to create a backup copy.
   

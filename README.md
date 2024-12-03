@@ -37,17 +37,17 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
         - In many cases this can be used the same way as `%>%`.
         - So if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package. 
         - Note that the placeholder for the built-in `|>` pipe is `_` whereas for the `magrittr` `%>%` pipe the placeholder is `.`. For example:
-	```r
- 	# Load mtcars data set
- 	data(mtcars)
- 
- 	# Built-in pipe
- 	mtcars |> lm(mpg ~ disp, data = _)
-
- 	# magrittr pipe
- 	library(magrittr)
- 	mtcars %>% lm(mpg ~ disp, data = .)
- 	```
+		```r
+	 	# Load mtcars data set
+	 	data(mtcars)
+	 
+	 	# Built-in pipe
+	 	mtcars |> lm(mpg ~ disp, data = _)
+	
+	 	# magrittr pipe
+	 	library(magrittr)
+	 	mtcars %>% lm(mpg ~ disp, data = .)
+	 	```
 - Use my package `tabulator` for some common data wrangling tasks. 
   - `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   - `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.

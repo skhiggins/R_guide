@@ -21,7 +21,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   - Use `stringr::str_c()` instead of `paste()`
   - Use `stringr::str_sub()` instead of `substr()`
 - Use `purr::map_*()` functions instead of lapply/sapply
-  - Within `purr::map_*()` functions as of R 4.1 you can use \() instead of function(). This is known as "syntactic sugar" as it is just shorthand to make the code more concise.
+  - Within `purr::map_*()` functions as of R 4.1 you can use `\()` instead of `function()`. This is known as "syntactic sugar" as it is just shorthand to make the code more concise.
 - Use `lubridate` for working with dates.
 - Use `conflicted` to explicitly resolve namespace conflicts.
   - `conflicted::conflict_scout()` displays namespace conflicts

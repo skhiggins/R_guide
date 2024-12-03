@@ -36,7 +36,18 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
     - As of R 4.1.0, there is a built-in pipe `|>`. See more details [here](https://www.r-bloggers.com/2021/05/the-new-r-pipe/).
         - In many cases this can be used the same way as `%>%`.
         - So if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package. 
-        - The exception to being able to use the built-in pipe `|>` the same way as the `magrittr` pipe `%>%` is that `|>` does not yet have a placeholder element, which is needed when the object being piped into a function goes to an argument other than the first argument (e.g., `mtcars %>% lm(mpg ~ disp, data = .)` uses `%>%` with the `.` placeholder). 
+        - Note that the placeholder for the built-in `|>` pipe is `_` whereas for the `magrittr` `%>%` pipe the placeholder is `.`. For example:
+	```r
+ 	# Load mtcars data set
+ 	data(mtcars)
+ 
+ 	# Built-in pipe
+ 	mtcars |> lm(mpg ~ disp, data = _)
+
+ 	# magrittr pipe
+ 	library(magrittr)
+ 	mtcars %>% lm(mpg ~ disp, data = .)
+ 	```
 - Use my package `tabulator` for some common data wrangling tasks. 
   - `tabulator::tab()` efficiently tabulates based on a categorical variable, sorts from most common to least common, and displays the proportion of observations with each value, as well as the cumulative proportion.
   - `tabulator::tabcount()` counts the unique number of categories of a categorical variable or formed by a combination of categorical variables.

@@ -336,6 +336,8 @@ git clone repolink
 9. Now, go back into the Dropbox folder and repeat this step. We need to create a .gitignore file in the Dropbox as well.
 
 Our project structure is complete. We can now make local edits to the scripts and results and push them to Github. All other project members will be able to receive these changes and update their local proc/ files by running the newly synched scripts. The main interactions should be to push local edits to Github. You should **not*- be making edits to the scripts located on the Dropbox. If we want to share new raw data, we will need to copy and paste that locally, but it will not cause issues because of the .gitignore file. 
+
+Note: If you will take over a project that is already underway by your former RA, please do not create a new project. Instead, refer to the [RA Guide](https://github.com/skhiggins/ra_guide?tab=readme-ov-file#v-keeping-github-and-dropbox-updated).
   
 ## Misc.
 

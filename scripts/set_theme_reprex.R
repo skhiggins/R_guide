@@ -37,11 +37,11 @@ mtcars %>% ggplot() +
   labs(y = "Horsepower", x = "Weight") +
   geom_hline(yintercept = 0) + 
   geom_vline(xintercept = 0) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) + # get rid of space below 0
-  scale_x_continuous(expand = expansion(mult = c(0, 0.01))) + # and at top/right of plot
+  scale_y_continuous(expand = c(0, 0.01)) + # get rid of space below 0
+  scale_x_continuous(expand = c(0, 0.01)) + # and at top/right of plot
     # note that expand = c(0, 0) would remove any space beyond scale but 
     # that would lead the points with highest x or y values to get partially cut off
-    # so expand = expansion(mult = c(0, 0.01)) expands top/right by 1%
+    # so expand = c(0, 0.01) expands top/right by 1%
     # see https://ggplot2.tidyverse.org/reference/expansion.html
   set_theme(
     y_title_margin = "r = 5",
@@ -63,11 +63,11 @@ mtcars %>% ggplot() +
   labs(y = "Horsepower", x = "Weight", color = "Cylinders") +
   geom_hline(yintercept = 0) + 
   geom_vline(xintercept = 0) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) + # get rid of space below 0
-  scale_x_continuous(expand = expansion(mult = c(0, 0.01))) + # and at top/right of plot
+  scale_y_continuous(expand = c(0, 0.01)) + # get rid of space below 0
+  scale_x_continuous(expand = c(0, 0.01)) + # and at top/right of plot
     # note that expand = c(0, 0) would remove any space beyond scale but 
     # that would lead the points with highest x or y values to get partially cut off
-    # so expand = expansion(mult = c(0, 0.01)) expands top/right by 1%
+    # so expand = c(0, 0.01) expands top/right by 1%
     # see https://ggplot2.tidyverse.org/reference/expansion.html
   scale_color_colorblind() +
   set_theme(
@@ -87,7 +87,7 @@ ggsave(
 mtcars %>% ggplot() + 
   geom_histogram(aes(x = wt)) + 
   labs(y = "Count", x = "Weight") + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.01))) +
+  scale_y_continuous(expand = c(0, 0.01)) +
   geom_hline(yintercept = 0) + # add horizontal axis; 
     # no vertical axis since histogram doesn't start at 0
   set_theme()

@@ -25,7 +25,9 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   - Within `purr::map_*()` functions as of R 4.1 you can use `\()` instead of `function()`. This is known as "syntactic sugar" as it is just shorthand to make the code more concise.
 - Use `lubridate` for working with dates.
 - Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
+<!---
   - To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`. Always put `library(here)` last in the packages section if for some reason the user has an outdated version of lubridate
+--->
 - Never use numbers to subset a data set's columns. This is very error prone code because if the data set changes in later edits to the previous scripts, the code will be wrong.
 - Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
 - Use the native pipe `|>` (requires R >=4.1.0) rather than `%>%` from `magrittr`. 

@@ -23,19 +23,18 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 - Use `purr::map_*()` functions instead of lapply/sapply
   - Within `purr::map_*()` functions as of R 4.1 you can use `\()` instead of `function()`. This is known as "syntactic sugar" as it is just shorthand to make the code more concise.
 - Use `lubridate` for working with dates.
-- Use `conflicted` to explicitly resolve namespace conflicts.
-  - `conflicted::conflict_scout()` displays namespace conflicts
-  - `conflicted::conflict_prefer()` declares the package to use in namespace conflicts, and the `conflict_prefer()` calls should be a block of code towards the top of the script, underneath the block of `library()` calls.
 - Never use `setwd()` or absolute file paths. Instead, use relative file paths with the `here` package.
   - To avoid conflicts with the deprecated `lubridate::here()`, if using both packages in a script, specify `conflict_prefer("here", "here")`. Always put `library(here)` last in the packages section if for some reason the user has an outdated version of lubridate
 - Never use numbers to subset a data set's columns. This is very error prone code because if the data set changes in later edits to the previous scripts, the code will be wrong.
 - Use `assertthat::assert_that()` frequently to add programmatic sanity checks in the code.
-- Use pipes like `%>%` from `magrittr`. 
-    - See [here](https://r4ds.had.co.nz/pipes.html) for more on using pipes. 
+- Use the native pipe `|>` (requires R >=4.1.0) rather than `%>%` from `magrittr`. 
+    - See [here](https://r4ds.hadley.nz/workflow-style.html#sec-pipes) for more on using pipes. 
+<!---
     - Other useful pipes are the compound assignment pipe `%<>%` (which, [unlike Hadley](https://r4ds.had.co.nz/pipes.html#other-tools-from-magrittr), I like to use) and the `%$%` exposition pipe.
     - As of R 4.1.0, there is a built-in pipe `|>`. See more details [here](https://www.r-bloggers.com/2021/05/the-new-r-pipe/).
         - In many cases this can be used the same way as `%>%`.
-        - So if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package. 
+        - So if you are not already loading a package that loads `magrittr`, such as `dplyr` or `tidyverse`, using `|>` has the benefit of needing to load one fewer package.
+--->
         - Note that the placeholder for the built-in `|>` pipe is `_` whereas for the `magrittr` `%>%` pipe the placeholder is `.`. For example:
 		```r
 	 	# Load mtcars data set

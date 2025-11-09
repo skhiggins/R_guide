@@ -13,6 +13,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
 ## Packages
 
 - Use `tidyverse` and/or `data.table` for wrangling data. 
+  - Do not load the entire `tidyverse` library as this is inefficient; instead load only the packages a given script is using (e.g., `dplyr`, `tidyr`, `stringr`, `ggplot2`, etc.)
   - An excellent resource on `tidyverse` is the book [R for Data Science (2nd Edition)](https://r4ds.hadley.nz/) (free online).
   - An excellent primer on `data.table` is available [here](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html). Additionally, there is a `data.table` guide designed for users transitioning from Stata to R at [Stata2R](https://stata2r.github.io/data.table/) and a comparison of `data.table` and `dplyr` [here](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/)
   - For big data (millions of observations), the efficiency advantages of `data.table` become important. 

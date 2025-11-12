@@ -71,6 +71,7 @@ For coding style practices, follow the [tidyverse style guide](https://style.tid
   mtcars %>% skim() %>% print()
   sink() # close the sink
   ```
+  - Other tools to provide a single descriptive view of the data set are `DescTools::Desc()` and `summarytools::dfSummary()`.
   
 ## Folder structure
 
@@ -87,6 +88,13 @@ Generally, within a project folder, we have a subfolder called `analysis` where 
   - programs - a subfolder containing functions called by the analysis scripts (if applicable)
 
 ## Scripts structure
+
+<!-- This whole stuff with `00_run.R` should be replaced in its entirety with `targets` workflow.
+I am not even going to attempt this in your style guide. Set aside some time on your next project 
+to fully learn it. This will save you hundreds of hours of fiddling
+with those silly `run_02_this <- 1` switches on your subsequent projects.
+See https://books.ropensci.org/targets/ and https://leanpub.com/raps-with-r.
+-- Stas Kolenikov. -->
 
 ### Separating scripts
 Because we often work with large data sets and efficiency is important, I advocate (nearly) always separating the following three actions into different scripts:  
@@ -210,6 +218,9 @@ Below is a brief example of a 00_run.R script. <!-- (Note that you might replace
 - For large data sets when read and write performance becomes important, the `qs` package performs quick serialization of R objects. Our [benchmarks](https://github.com/noahforougi/R_guide/blob/master/benchmarking_qs.md) suggest that `qs::qsave()` compresses files slightly more than `saveRDS()` and is faster than `readr::write_rds()`, so it provides the best of both worlds.
     - We still recommend `saveRDS()` or `readr::write_rds()` for medium-sized data sets for which read and write speed is not an issue, since these functions have a longer history of use and support.
 --->    
+- For interim to large data sets, the `qs` package is recommended. There is also `fst` package that provides comparable speed improvements but it strips data frames of their attributes (which often include `haven::labelled()` variable and value labels inherited from Stata). See comparison at http://svmiller.com/blog/2020/02/comparing-qs-fst-rds-for-bigger-datasets/,
+- When you expect to be accessing your data in parts (a subset of variables/columns such demographic variables plus a single wage variable from a rich data set, or a subset of rows/observations such as one or a few states at a time), `arrow::parquet` storage provides a columnar format optimized for I/O. For utmost performance, `parquet` files need to be organized in special ways -- namely grouped by the commonly accessed subsetting variables, with other variables coded numeric so that a quick scan of the file headers could reveal if there are any data worth accessing in a given stripe of a file (https://arrow.apache.org/docs/r/articles/dataset.html).
+- A comparison of a broad range of fast(er) data-to-and-from-disk packages is given at https://rsangole.netlify.app/posts/2022-09-14_data-read-write-performance/data-read-write-perf. Generally, the speed improvements are a combination of parallel read/writes (entirely absent from `base::saveRDS()`) and internal compression used by some of these packages.
 - When doing a time-consuming `map*()` or loop, e.g. reading in and manipulating separate data sets for each month, it is a good idea to save intermediate objects as part of the function being called by `map*()` or as part of the loop. That way, if something goes wrong you won't lose all your progress. 
 
 ### Graphs
